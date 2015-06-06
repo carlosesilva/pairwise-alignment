@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Home</title>
+
+<link rel="stylesheet" href="css/main.css" />
+
+</head>
+
+<body style="font-family:courier;">
+	<div id="title"><h1>Global Pairwise Alignment</h1>
+	Enter two sequences to find an optimal global pairwise alignment between them.<br/>
+	You may enter them manually or load them from a file.<br/>
+	Beware: If the sequences are too long, it may take a long time to process it or even crash the browser.
+	</div>
+	
+	
+	<div id="options">
+	
+		Sequence #1: <input type="file" id="file1" name="file1" enctype="multipart/form-data" /><br/>
+		<button type="button" id="seq1RandButton">Random</button><input type="text" id="seq1Input" name="seq1Input" value="THISLINE" /><br/><br/>
+		
+		Sequence #2: <input type="file" id="file2" name="file2" enctype="multipart/form-data" /><br/>
+		<button type="button" id="seq2RandButton">Random</button><input type="text" id="seq2Input" name="seq2Input" value="ISALIGNED" /><br/><br/><br/>
+		
+		
+		Match Score: <input type="text" id="matchScore" name="matchScore" value="3" onkeyup="this.value = this.value.replace(/[^-?0-9]/, '')"/>
+		Mismatch Score: <input type="text" id="mismatchScore" name="mismatchScore" value="0" onkeyup="this.value = this.value.replace(/[^-?0-9]/, '')"/>
+		Gap Penalty: <input type="text" id="gapPenalty" name="gapPenalty" value="-5" onkeyup="this.value = this.value.replace(/[^-?0-9]/, '')"/>
+		<br/>
+		<input type="checkbox" id="caseSensitive" value="caseSensitive"> Case sensitive
+		<button type="button" id="submitButton">Process</button>
+		
+	</div>
+
+
+
+
+	<div id="display">
+		<strong>An optimal alignment:</strong><br/><br/>
+		<div></div>
+	</div>
+	<div id="matrix">
+		<strong>Dynamic Matrix:</strong><br /><br />
+		<table></table>
+	</div>
+	<div id="userMatrix">
+		<strong>User Dynamic Matrix:</strong><br /><br />
+		<table></table>
+	</div>
+
+	
+	
+<script src="js/jquery-1.11.1.min.js"></script>
+<script src="js/main.js"></script>
+
+
+
+</body>
+</html>
+

@@ -1,0 +1,47 @@
+@import "meyer-reset";
+
+
+$fontColor : #333;
+
+
+$cellWidth : 50px;
+$cellHeight : $cellWidth;
+$cellBorder : 1px solid #666;
+
+
+body{
+	color: $fontColor;
+}
+
+
+#inputTableContainer {
+	td{
+		position: relative;
+	}
+	input{
+		width: $cellWidth;
+		height: $cellHeight;
+		text-align: center;
+		background: transparent;
+		border: $cellBorder;
+		color: $fontColor;
+	}
+	.emptyCell, .sequenceLetter{
+		input{
+			background: #999;
+			color: $fontColor; // not working on safari
+		}
+	}
+}
+
+#inputMatrixContainer{
+	position: relative;
+	overflow: visible;
+	width: $cellWidth;
+	// height: $cellHeight; // Breaks on firefox
+}
+#inputMatrix{
+	position: absolute;
+	top: 0;
+	left: 0;
+}
