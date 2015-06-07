@@ -2,10 +2,11 @@ var gulp        = require('gulp');
 var plumber     = require('gulp-plumber');
 var browserSync = require('browser-sync').create();
 var sass        = require('gulp-sass');
+var autoprefixer = require('gulp-autoprefixer');
 
 
 // Static Server + watching scss/html files
-gulp.task('serve', ['sass'], function() {
+gulp.task('serve', ['styles'], function() {
 
     browserSync.init({
         server: {
@@ -15,15 +16,16 @@ gulp.task('serve', ['sass'], function() {
         open: "ui"
     });
 
-    gulp.watch("./sass/**/*.scss", ['sass']);
+    gulp.watch("./sass/**/*.scss", ['styles']);
     gulp.watch(["./*.html", "./js/**/*.js"]).on('change', browserSync.reload);
 });
 
 // Compile sass into CSS & auto-inject into browsers
-gulp.task('sass', function() {
+gulp.task('styles', function() {
     return gulp.src("./sass/**/*.scss")
     .pipe(plumber())
     .pipe(sass.sync().on('error', sass.logError))
+    .pipe(autoprefixer())
     .pipe(gulp.dest("./css"))
     .pipe(browserSync.stream());
 });
