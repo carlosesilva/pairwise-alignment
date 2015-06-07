@@ -35,6 +35,7 @@ body {
 
 #inputTableContainer td {
   position: relative; }
+
 #inputTableContainer input {
   width: 50px;
   height: 50px;
@@ -42,6 +43,7 @@ body {
   background: transparent;
   border: 1px solid #666;
   color: #333; }
+
 #inputTableContainer .emptyCell input, #inputTableContainer .sequenceLetter input {
   background: #999;
   color: #333; }
@@ -55,5 +57,3 @@ body {
   position: absolute;
   top: 0;
   left: 0; }
-
-/*# sourceMappingURL=scratch.css.map */

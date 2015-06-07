@@ -1,0 +1,28 @@
+{
+  "name": "pairwise-alignment",
+  "version": "0.0.0",
+  "description": "Pairwise Alignment Learning Tool",
+  "main": "index.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carlosesilva/pairwise-alignment.git"
+  },
+  "keywords": [
+    "pairwise",
+    "alignment",
+    "e-learning"
+  ],
+  "author": "Carlos E Silva",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/carlosesilva/pairwise-alignment/issues"
+  },
+  "homepage": "https://github.com/carlosesilva/pairwise-alignment#readme",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-sass": "^2.0.1"
+  }
+}
