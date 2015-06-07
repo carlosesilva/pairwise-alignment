@@ -259,3 +259,8 @@ build/Release
 # https://docs.npmjs.com/misc/faq#should-i-check-my-node-modules-folder-into-git
 node_modules
 
+
+#############
+## My todo file so that I dont have to commit everytime I change it
+#############
+todo.md
