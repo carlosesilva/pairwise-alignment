@@ -31,29 +31,25 @@ table {
   border-spacing: 0; }
 
 body {
-  color: #f3c; }
+  color: #333333; }
 
-#inputTableContainer td {
+.dynamicProgrammingMatrixWrapper td {
   position: relative; }
 
-#inputTableContainer input {
+.dynamicProgrammingMatrixWrapper input[type=text] {
   width: 50px;
   height: 50px;
   text-align: center;
-  background: transparent;
-  border: 1px solid #666;
-  color: #f3c; }
+  background: #eeeeee;
+  border: 1px solid #9EDBFA;
+  color: #555555; }
 
-#inputTableContainer .emptyCell input, #inputTableContainer .sequenceLetterCell input {
-  background: #999;
-  color: #f3c; }
+.dynamicProgrammingMatrixWrapper > tbody > tr:nth-child(1) td input[type=text], .dynamicProgrammingMatrixWrapper > tbody > tr > td:nth-child(1) input[type=text] {
+  background: #333333;
+  color: #9EDBFA;
+  font-weight: bold; }
 
-#inputMatrixContainer {
-  position: relative;
-  overflow: visible;
-  width: 50px; }
-
-#inputMatrix {
+.dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrix {
   position: absolute;
   top: 0;
   left: 0; }

@@ -16,13 +16,13 @@ gulp.task('serve', ['styles'], function() {
         open: "ui"
     });
 
-    gulp.watch("./sass/**/*.scss", ['styles']);
+    gulp.watch("sass/**/*.scss", ['styles']);
     gulp.watch(["./*.html", "./js/**/*.js"]).on('change', browserSync.reload);
 });
 
 // Compile sass into CSS & auto-inject into browsers
 gulp.task('styles', function() {
-    return gulp.src("./sass/**/*.scss")
+    return gulp.src("sass/**/*.scss")
     .pipe(plumber())
     .pipe(sass.sync().on('error', sass.logError))
     .pipe(autoprefixer())

@@ -1,0 +1,32 @@
+$matrix-cell-width : 50px !default;
+$matrix-cell-border : 1px solid $color-theme-2 !default;
+
+.dynamicProgrammingMatrixWrapper {
+    td{
+        position: relative;
+    }
+    input[type=text]{
+        width: $matrix-cell-width;
+        height: $matrix-cell-width;
+        text-align: center;
+        background: $gray-lighter;
+        border: $matrix-cell-border;
+        color: $gray;
+    }
+    // first row and first column
+    >tbody > tr:nth-child(1) td, >tbody > tr > td:nth-child(1){
+        input[type=text]{
+            background: $gray-dark;
+            color: $color-theme-2; // not working on safari for some reason
+            font-weight: bold;
+        }
+    }
+    // the actual matrix
+    .dynamicProgrammingMatrix{
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}
+
+

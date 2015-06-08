@@ -1,7 +1,7 @@
-@import "meyer-reset";
+@import "partials/meyer-reset";
 
 
-$fontColor : #333;
+$fontColor : #f3c;
 
 
 $cellWidth : 50px;
@@ -26,7 +26,7 @@ body{
 		border: $cellBorder;
 		color: $fontColor;
 	}
-	.emptyCell, .sequenceLetter{
+	.emptyCell, .sequenceLetterCell{
 		input{
 			background: #999;
 			color: $fontColor; // not working on safari

@@ -1,0 +1,29 @@
+
+// Setup grayscale variables (idea from bootstrap http://getbootstrap.com/customize/)
+$gray-base    : #000;
+$gray-darker  : lighten($gray-base, 13.5%);
+$gray-dark    : lighten($gray-base, 20.0%);
+$gray         : lighten($gray-base, 33.5%);
+$gray-light   : lighten($gray-base, 46.7%);
+$gray-lighter : lighten($gray-base, 93.5%);
+
+
+
+// Setup color theme
+$color-theme-1 : #66CCFF;
+$color-theme-2 : #9EDBFA;
+$color-theme-3 : #4c99bf;
+$color-theme-4 : red;
+
+// regexer for color scheme idea
+// blue #66CCFF
+// blue light #9EDBFA
+// blue dark #4c99bf
+
+// Default color for any text
+$color-text : $gray-dark;
+
+body{
+    color: $color-text;
+}
+
