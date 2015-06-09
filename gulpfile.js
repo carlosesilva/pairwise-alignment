@@ -1,9 +1,15 @@
 var gulp        = require('gulp');
+var gutil       = require('gulp-util');
 var plumber     = require('gulp-plumber');
 var browserSync = require('browser-sync').create();
 var sass        = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
 
+var onError = function (err) {  
+    gutil.beep();
+    // console.log(err);
+    this.emit('end');
+};
 
 // Static Server + watching scss/html files
 gulp.task('serve', ['styles'], function() {
@@ -16,15 +22,15 @@ gulp.task('serve', ['styles'], function() {
         open: "ui"
     });
 
-    gulp.watch("sass/**/*.scss", ['styles']);
+    gulp.watch("./sass/**/*.scss", ['styles']);
     gulp.watch(["./*.html", "./js/**/*.js"]).on('change', browserSync.reload);
 });
 
 // Compile sass into CSS & auto-inject into browsers
 gulp.task('styles', function() {
-    return gulp.src("sass/**/*.scss")
-    .pipe(plumber())
-    .pipe(sass.sync().on('error', sass.logError))
+    return gulp.src("./sass/**/*.scss")
+    .pipe(plumber(onError))
+    .pipe(sass({ includePaths : ['./sass/partials/'] }).on('error', sass.logError))
     .pipe(autoprefixer())
     .pipe(gulp.dest("./css"))
     .pipe(browserSync.stream());

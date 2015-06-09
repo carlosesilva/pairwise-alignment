@@ -1,6 +1,10 @@
 #Workflow
 
 ###Git
+Pull from GitHub(makes sure the local develop branch is up to date with gitHub's develop branch)
+
+    git pull origin develop
+
 Create a new feature branch based on the up-to-date local devolop branch
 
     git checkout -b some-feature develop
