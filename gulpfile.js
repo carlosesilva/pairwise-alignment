@@ -1,12 +1,14 @@
-var gulp        = require('gulp');
-var gutil       = require('gulp-util');
-var plumber     = require('gulp-plumber');
-var browserSync = require('browser-sync').create();
-var sass        = require('gulp-sass');
+var gulp         = require('gulp');
+var gutil        = require('gulp-util');
+var plumber      = require('gulp-plumber');
+var browserSync  = require('browser-sync').create();
+var sass         = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
 
-var onError = function (err) {  
-    gutil.beep();
+var onError = function (err) {
+    // beep on error, except when gulp-sass is being stupid and breaks because of imports
+    if (err.message.indexOf('file to import not found or unreadable') < 0)
+        gutil.beep();
     // console.log(err);
     this.emit('end');
 };

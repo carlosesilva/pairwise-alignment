@@ -34,7 +34,7 @@ Pull from GitHub(makes sure the local develop branch is up to date with gitHub's
 
 Merge feature into local develop
 
-    git merge some-feature
+    git merge --no--ff some-feature
 
 Push updated develop to GitHub
     
