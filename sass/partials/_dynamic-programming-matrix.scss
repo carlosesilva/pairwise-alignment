@@ -5,18 +5,18 @@ $matrix-cell-border : 1px solid $color-theme-2 !default;
     td{
         position: relative;
     }
-    input[type=text]{
+    input[type=text], .dynamicProgrammingMatrixCell{
         width: $matrix-cell-width;
         height: $matrix-cell-width;
         text-align: center;
-        background: $gray-lighter;
+        background-color: $gray-lighter;
         border: $matrix-cell-border;
         color: $gray;
     }
     // first row and first column
     >tbody > tr:nth-child(1) td, >tbody > tr > td:nth-child(1){
         input[type=text]{
-            background: $gray-dark;
+            background-color: $gray-dark;
             color: $color-theme-2; // not working on safari for some reason
             font-weight: bold;
         }
@@ -26,6 +26,12 @@ $matrix-cell-border : 1px solid $color-theme-2 !default;
         position: absolute;
         top: 0;
         left: 0;
+    }
+    .dynamicProgrammingMatrixCell.correct{
+        background-color: green;
+    }
+    .dynamicProgrammingMatrixCell.wrong{
+        background-color: red;
     }
 }
 

@@ -4,8 +4,8 @@ $(document).ready(function(){
 	/**
 	 * Initialize sequences
 	 */
-	var sequence1 = 'THISLINE',
-		sequence2 = 'ISALIGNED',
+	var sequence1 = 'THIS',
+		sequence2 = 'THAT',
 		matchScore = 3,
 		mismatchScore = 0,
 		gapPenalty = -5,
@@ -43,12 +43,25 @@ $(document).ready(function(){
 	// compare matrices
 	$('#compareMatrices').click(function(event) {
 		var inputMatrix = dynamicProgrammingMatrixRead($('#inputTableContainer .dynamicProgrammingMatrix'));
-		compareMatrices(correctMatrix, inputMatrix);
+		displayFeedback($('#inputTableContainer .dynamicProgrammingMatrix'), compareMatrices(correctMatrix, inputMatrix));
 	});
 
+	// limit input to dynamicProgrammingMatrixCell to numbers and dashes
+	$('.dynamicProgrammingMatrixCell').keyup(function(event) {
+		$(this).val($(this).val().replace(/[^-?0-9]/, ''));
+		// Remember to add, replace any dashes that are in anyposition other than first
+	});
+
+	$('#inputTableContainer .dynamicProgrammingMatrixCell').focusout(function(event) {
+		var inputMatrix = dynamicProgrammingMatrixRead($('#inputTableContainer .dynamicProgrammingMatrix'));
+		displayFeedback($('#inputTableContainer .dynamicProgrammingMatrix'), compareMatrices(correctMatrix, inputMatrix));
+		// // validate input
+		// if ($(this).val() != ''  && !$.isNumeric($(this).val()))
+		// 	$(this).addClass('wrong');
+	});
 
 	// display feedback
-	
+		
 
 
 });
