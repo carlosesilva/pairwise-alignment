@@ -1,17 +1,17 @@
 /**
  * Read data from dynamicProgrammingMatrix table into an array
  * @param  {object} dynamicProgrammingMatrix
- * @return {array} S
+ * @return {array} matrix
  */
 function dynamicProgrammingMatrixRead (dynamicProgrammingMatrix) {
-    var S = [];
+    var matrix = [];
 
     dynamicProgrammingMatrix.find('tr').each(function() {
         var row = [];
         $(this).find('td').each(function() {
-            row.push($(this).find('input').val());
+            row.push([parseInt($(this).find('input').val()), ["traceback info goes here"]]);
         });
-        S.push(row);
+        matrix.push(row);
     });
-    return S;
+    return matrix;
 }
