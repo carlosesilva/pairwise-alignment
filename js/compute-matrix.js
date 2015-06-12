@@ -1,4 +1,4 @@
-function computeGlobal (mode,sequence1,sequence2,matchScore,mismatchScore,gapPenalty) {
+function computeMatrix (mode,sequence1,sequence2,matchScore,mismatchScore,gapPenalty) {
     // Get length of the sequences
     var m = sequence1.length;
     var n = sequence2.length;

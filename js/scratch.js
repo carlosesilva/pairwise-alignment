@@ -40,11 +40,15 @@ $(document).ready(function(){
 
 
 
+	// compare matrices
 	$('#compareMatrices').click(function(event) {
 		var inputMatrix = dynamicProgrammingMatrixRead($('#inputTableContainer .dynamicProgrammingMatrix'));
 		compareMatrices(correctMatrix, inputMatrix);
 	});
 
+
+	// display feedback
+	
 
 
 });
