@@ -4,7 +4,7 @@
  * @param  {string} seq2
  * @return {string} result
  */
-function buildDynamicProgrammingMatrixWrapper(seq1, seq2){
+function buildMatrixHTML(seq1, seq2){
     var result = '<table class="dynamicProgrammingMatrixWrapper"><tbody>';
     result += '<tr><td class="emptyCell"><input type="text" disabled></td><td class="emptyCell"><input type="text" disabled></td>';
     for (var j = 0; j<seq2.length; j++){

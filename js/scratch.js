@@ -15,7 +15,7 @@ $(document).ready(function(){
     // compare matrices when the compare button is cliked
     // this makes more sense when instant feedback is turned off or when in TEST mode
     $('#compareMatrices').click(function(event) {
-        var inputMatrix = dynamicProgrammingMatrixRead($('#inputTableContainer .dynamicProgrammingMatrix'));
+        var inputMatrix = readMatrix($('#inputTableContainer .dynamicProgrammingMatrix'));
         displayFeedback($('#inputTableContainer .dynamicProgrammingMatrix'), compareMatrices(correctMatrix, inputMatrix));
     });
     
@@ -23,16 +23,17 @@ $(document).ready(function(){
     
 
 
-    // Read dynamicProgrammingMatrix when button is clicked
-    $('#readMatrix').click(function(event) {
-        console.log(dynamicProgrammingMatrixRead($('#inputTableContainer .dynamicProgrammingMatrix')));
-    });
-
 
 
 
     process();
+    
     $('#sequence1, #sequence2, #matchScore, #mismatchScore, #gapPenalty, #mode, #instantFeedback, #showTestingInfo').change(function(event) {
+        process();
+    });
+
+
+    $('#process').click(function(event) {
         process();
     });
 
@@ -83,7 +84,7 @@ function process () {
 
 
     // Build input matrix
-    $('#inputTableContainer').html(buildDynamicProgrammingMatrixWrapper(sequence1, sequence2));
+    $('#inputTableContainer').html(buildMatrixHTML(sequence1, sequence2));
 
     
     // Instant feedback
@@ -91,7 +92,7 @@ function process () {
         $('#inputTableContainer .dynamicProgrammingMatrixCell').on('focusout', function(event) {
             // validate input again in case .keyup() failed e.g. value was pasted in, dragged in
             $(this).val(filterInteger($(this).val()));
-            var inputMatrix = dynamicProgrammingMatrixRead($('#inputTableContainer .dynamicProgrammingMatrix'));
+            var inputMatrix = readMatrix($('#inputTableContainer .dynamicProgrammingMatrix'));
             displayFeedback($('#inputTableContainer .dynamicProgrammingMatrix'), compareMatrices(correctMatrix, inputMatrix));
         });
     }else{
@@ -110,7 +111,7 @@ function process () {
 
     if (showTestingInfo){
         // build correct table skeleton
-        $('#correctMatrix').html(buildDynamicProgrammingMatrixWrapper(sequence1, sequence2));
+        $('#correctMatrix').html(buildMatrixHTML(sequence1, sequence2));
         
         // print correct matrix to a table
         printMatrix(correctMatrix,$('#correctMatrix').find('.dynamicProgrammingMatrix'));
@@ -121,6 +122,13 @@ function process () {
         $('#testing').hide().prev().removeClass('left');
     }
 
+    
+
+    // Read dynamicProgrammingMatrix when button is clicked
+    $('#readMatrix').click(function(event) {
+        console.log(readMatrix($('#inputTableContainer .dynamicProgrammingMatrix')));
+    });
+    
     /*-----  End of TESTING  ------*/
 
 } // Closes process()

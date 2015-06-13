@@ -3,7 +3,7 @@
  * @param  {object} dynamicProgrammingMatrix
  * @return {array} matrix
  */
-function dynamicProgrammingMatrixRead (dynamicProgrammingMatrix) {
+function readMatrix (dynamicProgrammingMatrix) {
     var matrix = [];
 
     dynamicProgrammingMatrix.find('tr').each(function() {
