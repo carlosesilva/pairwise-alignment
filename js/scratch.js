@@ -1,40 +1,9 @@
 $(document).ready(function(){
 
-
-    /*=================================
-    =            Variables            =
-    =================================*/
-    var sequence1 = 'THIS',
-    sequence2 = 'THAT',
-    matchScore = 3,
-    mismatchScore = 0,
-    gapPenalty = -5,
-    mode = 'global',
-    instantFeedback = false;
-    
-    
-    /*-----  End of Variables  ------*/
-
-
-    
-    
-
-
-    // calculate correct matrix array
-    var correctMatrix = computeMatrix(mode,sequence1,sequence2,matchScore,mismatchScore,gapPenalty)
-
-
-
-
-
-
     /*=============================
     =            UI/UX            =
     =============================*/
-    // Build input matrix
-    $('#inputTableContainer').html(buildDynamicProgrammingMatrixWrapper(sequence1, sequence2));
 
-    
 
     // limit input to dynamicProgrammingMatrixCell to positive and negative integers only
     $('#inputTableContainer .dynamicProgrammingMatrixCell').keyup(function(event) {
@@ -54,49 +23,18 @@ $(document).ready(function(){
     
 
 
-
-    // Instant feedback
-    if (instantFeedback){
-        $('#inputTableContainer .dynamicProgrammingMatrixCell').focusout(function(event) {
-            // validate input again in case .keyup() failed e.g. value was pasted in, dragged in
-            $(this).val(filterInteger($(this).val()));
-
-            var inputMatrix = dynamicProgrammingMatrixRead($('#inputTableContainer .dynamicProgrammingMatrix'));
-            displayFeedback($('#inputTableContainer .dynamicProgrammingMatrix'), compareMatrices(correctMatrix, inputMatrix));
-        });
-    }
-    
-
-
-
-
-
-
-    /*===============================
-    =            TESTING            =
-    ===============================*/
-    // create div for testing print results 
-    $(document.createElement('div')).attr('id', 'correctMatrix').addClass('dynamicProgrammingMatrixWrapper').html(buildDynamicProgrammingMatrixWrapper(sequence1, sequence2)).appendTo('body');
-
-    // build correct table skeleton
-    $('#correctMatrix').html(buildDynamicProgrammingMatrixWrapper(sequence1, sequence2));
-    
-    // print correct matrix to a table
-    printMatrix(correctMatrix,$('#correctMatrix').find('.dynamicProgrammingMatrix'));
-    
-    
-
-
     // Read dynamicProgrammingMatrix when button is clicked
     $('#readMatrix').click(function(event) {
         console.log(dynamicProgrammingMatrixRead($('#inputTableContainer .dynamicProgrammingMatrix')));
     });
-    /*-----  End of TESTING  ------*/
-    
-    
 
 
 
+
+    process();
+    $('#sequence1, #sequence2, #matchScore, #mismatchScore, #gapPenalty, #mode, #instantFeedback, #showTestingInfo').change(function(event) {
+        process();
+    });
 
 
 
@@ -120,6 +58,86 @@ function filterInteger(val){
 function evaluate (argument) {
     // body...
 }
+
+
+
+
+
+
+
+
+function process () {
+
+    // initialize global variables
+    sequence1 = $("#sequence1").val();
+    sequence2 = $("#sequence2").val();
+    matchScore = parseInt($("#matchScore").val(),10);
+    mismatchScore = parseInt($("#mismatchScore").val(),10);
+    gapPenalty = parseInt($("#gapPenalty").val(),10);
+    mode = $("#mode").val();
+    var instantFeedback = $("#instantFeedback")[0].checked;
+
+
+    // calculate correct matrix array
+    correctMatrix = computeMatrix(mode,sequence1,sequence2,matchScore,mismatchScore,gapPenalty);
+
+
+    // Build input matrix
+    $('#inputTableContainer').html(buildDynamicProgrammingMatrixWrapper(sequence1, sequence2));
+
+    
+    // Instant feedback
+    if (instantFeedback){
+        $('#inputTableContainer .dynamicProgrammingMatrixCell').on('focusout', function(event) {
+            // validate input again in case .keyup() failed e.g. value was pasted in, dragged in
+            $(this).val(filterInteger($(this).val()));
+            var inputMatrix = dynamicProgrammingMatrixRead($('#inputTableContainer .dynamicProgrammingMatrix'));
+            displayFeedback($('#inputTableContainer .dynamicProgrammingMatrix'), compareMatrices(correctMatrix, inputMatrix));
+        });
+    }else{
+        $('#inputTableContainer .dynamicProgrammingMatrixCell').off('focusout');
+    }
+
+
+
+
+
+    /*===============================
+    =            TESTING            =
+    ===============================*/
+    
+    var showTestingInfo = $("#showTestingInfo")[0].checked;
+
+    if (showTestingInfo){
+        // build correct table skeleton
+        $('#correctMatrix').html(buildDynamicProgrammingMatrixWrapper(sequence1, sequence2));
+        
+        // print correct matrix to a table
+        printMatrix(correctMatrix,$('#correctMatrix').find('.dynamicProgrammingMatrix'));
+
+        $('#testing').show().prev().addClass('left');
+
+    }else{
+        $('#testing').hide().prev().removeClass('left');
+    }
+
+    /*-----  End of TESTING  ------*/
+
+} // Closes process()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*-----  End of Functions  ------*/

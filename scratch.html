@@ -6,15 +6,41 @@
 	<link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+	<div id="wrapper" class="left">
+		<h1>Pairwise Alignment</h1>
+		<div id="options">
+			sequence1: <input type="text" name="" id="sequence1" value="THIS"/>
+			sequence2: <input type="text" name="" id="sequence2" value="THAT"/><br><br>
+			matchScore: <input type="text" name="" id="matchScore" value="3"/>
+			mismatchScore: <input type="text" name="" id="mismatchScore" value="0"/>
+			gapPenalty: <input type="text" name="" id="gapPenalty" value="-5"/><br><br>
+			mode: 
+			<select name="" id="mode">
+				<option value="global">global</option>
+				<option value="semi">semi</option>
+				<option value="local">local</option>
+			</select>
+			instantFeedback: <input type="checkbox" name="" id="instantFeedback" checked/>
+			showTestingInfo: <input type="checkbox" name="" id="showTestingInfo" checked/>
+			<button id="process">Process</button>
+			<br><br><br>
+		</div>
+		
+		Input:
+		<div id="inputTableContainer" class="dynamicProgrammingMatrixWrapper"></div>
+	</div>
 
+	<div id="testing" class="right">
+    	<h1>Testing info here</h1>
 
-	<div id="inputTableContainer" class="dynamicProgrammingMatrixWrapper"></div>
-    <button id="readMatrix">Read Matrix</button>
- 	<button id="compareMatrices">Compare Matrices</button>
- 	<div id="display2"></div>
+		<button id="readMatrix">Read Matrix</button>
+		<button id="compareMatrices">Compare Matrices</button>
+		<br><br>
+		Correct Matrix:
+		<div id="correctMatrix" class="dynamicProgrammingMatrixWrapper"></div>
 
-    <br><br><br><hr><h1>Testing info down here</h1><hr>
-	
+	</div>
+
 	
 	
 	

@@ -59,3 +59,31 @@ body {
 
 .dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrixCell.wrong {
   background-color: red; }
+
+body {
+  text-align: center; }
+
+h1 {
+  font-size: 3em;
+  margin: 30px 0;
+  text-align: center; }
+
+h2 {
+  font-size: 2em;
+  margin: 30px 0;
+  text-align: center; }
+
+.left {
+  width: 49%;
+  float: left; }
+
+.right {
+  width: 49%;
+  float: right; }
+
+.dynamicProgrammingMatrixWrapper {
+  margin: 0 auto; }
+
+#testing {
+  display: none;
+  border-left: 1px solid #9EDBFA; }
