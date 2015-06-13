@@ -5,19 +5,17 @@ function computeMatrix (mode,sequence1,sequence2,matchScore,mismatchScore,gapPen
 
     
     // Declare our 3d array of lengths m, n and 2. The third dimension will hold the value calculated and the traceback information at the position [Xi][Yj]
-    var S = createArray(m+1,n+1,2);
+    // var S = createArray(m+1,n+1,2);
     // HERE
-    // var S = createArray(m+1,n+1);
+    var S = createArray(m+1,n+1);
     
     // set the first element trace-back information to -1 so the traceback function knows when to stop
-    S[0][0] = [0,-1];
+    // S[0][0] = [0,-1];
     // HERE
-    // S[0][0] = {
-    //     score: 0,
-    //     traceback: [false, false, false, true]
-    // };
-    
-    
+    S[0][0] = {
+        score: 0,
+        traceback: [false, false, false, true]
+    };
 
 
 
@@ -25,20 +23,20 @@ function computeMatrix (mode,sequence1,sequence2,matchScore,mismatchScore,gapPen
     // var initialGapPenalty = gapPenalty ;
     if (mode === 'global'){
         for (var i = 1; i<=m;i++){
-            S[i][0] = [(S[i-1][0][0] + gapPenalty), 1];
+            // S[i][0] = [(S[i-1][0][0] + gapPenalty), 1];
             // HERE
-            // S[i][0] = {
-            //     score: (S[i-1][0] + gapPenalty),
-            //     traceback: [false, true, false, false] // vertical
-            // }
+            S[i][0] = {
+                score: S[i-1][0].score + gapPenalty,
+                traceback: [false, true, false, false] // vertical
+            };
         }
         for (var j = 1; j<=n;j++){
-            S[0][j] = [(S[0][j-1][0] + gapPenalty), 2];
+            // S[0][j] = [(S[0][j-1][0] + gapPenalty), 2];
             // HERE
-            // S[0][j] = {
-            //     score: (S[0][j-1] + gapPenalty),
-            //     traceback: [false, false, true, false] // horizontal
-            // }
+            S[0][j] = {
+                score: (S[0][j-1].score + gapPenalty),
+                traceback: [false, false, true, false] // horizontal
+            };
         }
     }
     // else {
@@ -65,9 +63,9 @@ function computeMatrix (mode,sequence1,sequence2,matchScore,mismatchScore,gapPen
             
             // get value of the 3 options and put it into a tempArr
             // find the max and its index
-            var tempArr = [ (S[i-1][j-1][0] + similarityScore), (S[i-1][j][0] + gapPenalty), (S[i][j-1][0] + gapPenalty) ];
+            // var tempArr = [ (S[i-1][j-1][0] + similarityScore), (S[i-1][j][0] + gapPenalty), (S[i][j-1][0] + gapPenalty) ];
             // HERE
-            // var tempArr = [ (S[i-1][j-1].score + similarityScore), (S[i-1][j].score + gapPenalty), (S[i][j-1].score + gapPenalty) ];
+            var tempArr = [ (S[i-1][j-1].score + similarityScore), (S[i-1][j].score + gapPenalty), (S[i][j-1].score + gapPenalty) ];
             
             // for local mode consider the value 0 as an option for the max function
             if (mode === 'local'){
@@ -75,16 +73,16 @@ function computeMatrix (mode,sequence1,sequence2,matchScore,mismatchScore,gapPen
             }
 
             // find max element in array
-            var max = tempArr[0];
-            var maxIndex = 0;
-            for (var k = 1; k < tempArr.length; k++) {
-                if (tempArr[k] > max) {
-                    maxIndex = k;
-                    max = tempArr[k];
-                }
-            }
+            // var max = tempArr[0];
+            // var maxIndex = 0;
+            // for (var k = 1; k < tempArr.length; k++) {
+            //     if (tempArr[k] > max) {
+            //         maxIndex = k;
+            //         max = tempArr[k];
+            //     }
+            // }
             // HERE
-            // var max = Math.max.apply(null, tempArr);
+            var max = Math.max.apply(null, tempArr);
             // gather traceback information
             var traceback = tempArr.map(function(elem) {
                 return (max === elem);
@@ -94,16 +92,15 @@ function computeMatrix (mode,sequence1,sequence2,matchScore,mismatchScore,gapPen
             if (mode !== 'local'){
                 traceback[3] = false;
             }
-            console.log(traceback);
 
 
             // set S[i][j] to the calculated max and the trace-back information
-            S[i][j] = [max,maxIndex];
+            // S[i][j] = [max,maxIndex];
             // HERE
-            // S[i][j] = {
-            //     score: max,
-            //     traceback: traceback
-            // };
+            S[i][j] = {
+                score: max,
+                traceback: traceback
+            };
         }
     }
     return S;

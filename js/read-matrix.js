@@ -9,12 +9,12 @@ function readMatrix (dynamicProgrammingMatrix) {
     dynamicProgrammingMatrix.find('tr').each(function() {
         var row = [];
         $(this).find('td').each(function() {
-            row.push([parseInt($(this).find('input').val()), ]);
+            // row.push([parseInt($(this).find('input').val()), ]);
             // HERE
-            // row.push({
-            //     score: parseInt($(this).find('input').val(), 10),
-            //     traceback: [false, false, false, false]
-            // });
+            row.push({
+                score: parseInt($(this).find('input').val(), 10),
+                traceback: [false, false, false, false]
+            });
         });
         matrix.push(row);
     });
