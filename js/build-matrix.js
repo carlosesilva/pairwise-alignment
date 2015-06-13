@@ -32,7 +32,7 @@ function buildDynamicProgrammingMatrix(seq1, seq2){
         result += '<tr>';
         for (var j = -1; j<seq2.length; j++){
             result += '<td>';
-            result += '<input type="text" class="dynamicProgrammingMatrixCell" i="' + i + '" j="' + j + '"/>';
+            result += '<input type="text" class="dynamicProgrammingMatrixCell" pattern="^-?\\d+" i="' + i + '" j="' + j + '"/>';
             result += '</td>';
         }
         result += '</tr>';
