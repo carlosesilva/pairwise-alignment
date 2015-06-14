@@ -90,3 +90,9 @@ h2 {
 #testing {
   display: none;
   border-left: 1px solid #9EDBFA; }
+
+.alignmentContainer {
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: 20px;
+  letter-spacing: 5px;
+  line-height: 1em; }
