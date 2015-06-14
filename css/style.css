@@ -60,6 +60,9 @@ body {
 .dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrixCell.wrong {
   background-color: red; }
 
+.dynamicProgrammingMatrixCell.traced {
+  background-color: blue !important; }
+
 body {
   text-align: center; }
 

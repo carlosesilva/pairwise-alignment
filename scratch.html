@@ -9,16 +9,16 @@
 	<div id="wrapper" class="left">
 		<h1>Pairwise Alignment</h1>
 		<div id="options">
-			sequence1: <input type="text" name="" id="sequence1" value="THIS"/>
-			sequence2: <input type="text" name="" id="sequence2" value="THAT"/><br><br>
+			sequence1: <input type="text" name="" id="sequence1" value="THISLINE"/>
+			sequence2: <input type="text" name="" id="sequence2" value="ISALIGNED"/><br><br>
 			matchScore: <input type="text" name="" id="matchScore" value="3"/>
 			mismatchScore: <input type="text" name="" id="mismatchScore" value="0"/>
 			gapPenalty: <input type="text" name="" id="gapPenalty" value="-5"/><br><br>
 			mode: 
 			<select name="" id="mode">
 				<option value="global">global</option>
-				<option value="semi">semi</option>
-				<option value="local">local</option>
+				<option value="semi" >semi</option>
+				<option value="local" >local</option>
 			</select>
 			instantFeedback: <input type="checkbox" name="" id="instantFeedback" checked/>
 			showTestingInfo: <input type="checkbox" name="" id="showTestingInfo" checked/>
@@ -52,6 +52,7 @@
 <script src="js/print-matrix.js"></script>
 <script src="js/compare-matrices.js"></script>
 <script src="js/display-feedback.js"></script>
+<script src="js/traceback.js"></script>
 <script src="js/scratch.js"></script>
 </body>
 </html>

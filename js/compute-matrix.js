@@ -27,14 +27,26 @@ function computeMatrix (mode,sequence1,sequence2,matchScore,mismatchScore,gapPen
         }
         for (var j = 1; j<=n;j++){
             S[0][j] = {
-                score: (S[0][j-1].score + gapPenalty),
+                score: S[0][j-1].score + gapPenalty,
                 traceback: [false, false, true, false] // horizontal
             };
         }
     }
-    // else {
-    //     // semi and local stuff
-    // }
+    else {
+        // semi and local stuff
+        for (var i = 1; i<=m;i++){
+            S[i][0] = {
+                score: 0,
+                traceback: [false, false, false, true] // vertical
+            };
+        }
+        for (var j = 1; j<=n;j++){
+            S[0][j] = {
+                score: 0,
+                traceback: [false, false, false, true] // horizontal
+            };
+        }
+    }
 
 
     
@@ -74,7 +86,6 @@ function computeMatrix (mode,sequence1,sequence2,matchScore,mismatchScore,gapPen
             if (mode !== 'local'){
                 traceback[3] = false;
             }
-
 
             // set S[i][j] calculated max score and traceback information
             S[i][j] = {
