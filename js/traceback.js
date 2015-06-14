@@ -112,71 +112,34 @@ function traceback(mode,matrix,sequence1,sequence2){
 
     return {
         tracedCells: tracedCells,
-        alignment: [alignment1, alignment2] 
-    }
-
-    // /*===========================
-    // =            OLD            =
-    // ===========================*/
-    
-    // current = matrix[i][j]
-
-    // var current = S[m][n];
-    // var i = m;
-    // var j = n;
-    // var alignment = [];
-    
-
-
-
-    // do {
-    //     matrix.find("tr").eq(i+1).find("td").eq(j+1).addClass("traced");
-    //     if (current[1] == 0){
-    //         i--;
-    //         j--;
-    //         alignment.push([seq1[i],seq2[j]]);
-    //     }else if (current[1] == 1){
-    //         i--;
-    //         alignment.push([seq1[i],"-"]);
-    //     }else if (current[1] == 2){
-    //         j--;                
-    //         alignment.push(["-", seq2[j]]);
-    //     }
-        
-    //     var current = S[i][j];
-    //     matrix.find("tr").eq(i+1).find("td").eq(j+1).addClass("traced");
-    // }while(current[1] != -1 );
-    
-    // alignment = alignment.reverse();
-    
-    // var seq1Result ="";
-    // var seq2Result ="";
-    // var score = "";
-    
-    // for (var i =0; i < alignment.length; i++){
-    //     seq1Result += alignment[i][0] + "&nbsp;";
-    //     seq2Result += alignment[i][1] + "&nbsp;";
-    //     if (alignment[i][0] == alignment[i][1]){
-    //         score += "|&nbsp;";
-    //     }else if( alignment[i][0] == "-" || alignment[i][1] == "-" ){
-    //         score += "&nbsp;&nbsp;";
-    //     }else {
-    //         score += "X&nbsp;";
-    //     }
-    // }
-            
-    // var result = seq1Result + "<br>" + score + "<br>" + seq2Result;
-    // display.html(result);
-
-    /*-----  End of OLD  ------*/
+        alignment: [alignment1, alignment2]
+    };
     
     
 }
 
 
 function printTraceback (traceback,matrixTable,alignmentContainer) {
+    var matchMismatch = [];
+
+    // Loop through tracedCells and updated matrixTable and alignmentContainer
     for (var k = 0; k < traceback.tracedCells.length; k++) {
+        // Add traced class to matrixTable cells that are part of alignment
         matrixTable.find('tr').eq(traceback.tracedCells[k].i).find('td').eq(traceback.tracedCells[k].j).find('input').addClass('traced');
+
+        // Construct matchMismatch which holds the visual representation between both sequences in the alignment (e.g. X for mismatch, | for matches, &nbsp; for gap)
+        if (traceback.alignment[0][k] === '-' || traceback.alignment[1][k] === '-'){
+            matchMismatch.push('&nbsp;');
+        } else if (traceback.alignment[0][k] === traceback.alignment[1][k]){
+            matchMismatch.push('|');
+        } else{
+            matchMismatch.push('X');
+        }
     }
-    alignmentContainer.html( traceback.alignment[0].join('') + '<br>' + traceback.alignment[1].join('') );
+
+    // The above loop gives matchMismatch an extra undesired character (runs one time too long) so we will remove it with .pop()
+    matchMismatch.pop();
+
+    // display alignment
+    alignmentContainer.html( traceback.alignment[0].join('') + '<br>' + matchMismatch.join('') + '<br>' + traceback.alignment[1].join('') );
 }
