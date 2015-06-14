@@ -1,5 +1,5 @@
 // Function traceback()
-function traceback(mode,matrix){
+function traceback(mode,matrix,sequence1,sequence2){
 
     // global: Traceback starts at last cell, travels back to first cell
     // semi: Traceback starts at max of last column or row. Stop traceback when reaching first row or column
@@ -11,7 +11,9 @@ function traceback(mode,matrix){
 
     // initialize variables
     var i, j, current,
-    tracedCells = [];
+    tracedCells = [],
+    alignment1 = [],
+    alignment2 = [];
 
 
     // Extract matrix dimensions
@@ -80,31 +82,38 @@ function traceback(mode,matrix){
     while(!current.traceback[3]){
         if (current.traceback[0]){
             // [0] represents diagonal path next is S[i-1][j-1]
-
             // update i and j and current
             i--;
             j--;
             current = matrix[i][j];
             tracedCells.push({i: i,j: j});
+            alignment1.unshift(sequence1[i]);
+            alignment2.unshift(sequence2[j]);
         } else if (current.traceback[1]){
             // [1] represents vertical path next is S[i-1][j]
             // update i and current
             i--;
             current = matrix[i][j];
             tracedCells.push({i: i,j: j});
+            alignment1.unshift(sequence1[i]);
+            alignment2.unshift('-');
         } else if (current.traceback[2]){
             // [2] represents horizontal path next is S[i][j-1]
             // update j and current
             j--;
             current = matrix[i][j];
             tracedCells.push({i: i,j: j});
+            alignment1.unshift('-');
+            alignment2.unshift(sequence2[j]);
         }
     }
     // We've reached a traceback with no path, lets end the traceback function
     // most likely we will use "return" here
 
-    return  tracedCells;
-
+    return {
+        tracedCells: tracedCells,
+        alignment: [alignment1, alignment2] 
+    }
 
     // /*===========================
     // =            OLD            =
@@ -165,8 +174,9 @@ function traceback(mode,matrix){
 }
 
 
-function printTraceback (tracedCells,matrixTable) {
-    for (var k = 0; k < tracedCells.length; k++) {
-        matrixTable.find('tr').eq(tracedCells[k].i).find('td').eq(tracedCells[k].j).find('input').addClass('traced');
+function printTraceback (traceback,matrixTable,alignmentContainer) {
+    for (var k = 0; k < traceback.tracedCells.length; k++) {
+        matrixTable.find('tr').eq(traceback.tracedCells[k].i).find('td').eq(traceback.tracedCells[k].j).find('input').addClass('traced');
     }
+    alignmentContainer.html( traceback.alignment[0].join('') + '<br>' + traceback.alignment[1].join('') );
 }

@@ -118,7 +118,7 @@ function process () {
 
 
         // test traceback
-        printTraceback(traceback(mode, correctMatrix),$('#correctMatrix').find('.dynamicProgrammingMatrix'));
+        printTraceback(traceback(mode, correctMatrix, sequence1, sequence2), $('#correctMatrix').find('.dynamicProgrammingMatrix'), $('#correctAlignment'));
 
         $('#testing').show().prev().addClass('left');
 
