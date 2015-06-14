@@ -116,6 +116,10 @@ function process () {
         // print correct matrix to a table
         printMatrix(correctMatrix,$('#correctMatrix').find('.dynamicProgrammingMatrix'));
 
+
+        // test traceback
+        printTraceback(traceback(mode, correctMatrix),$('#correctMatrix').find('.dynamicProgrammingMatrix'));
+
         $('#testing').show().prev().addClass('left');
 
     }else{
