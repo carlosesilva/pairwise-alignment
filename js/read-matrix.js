@@ -10,7 +10,7 @@ function readMatrix (dynamicProgrammingMatrix) {
         var row = [];
         $(this).find('td').each(function() {
             row.push({
-                score: parseInt($(this).find('input').val(), 10),
+                score: parseInt($(this).find('.dynamicProgrammingMatrixCell').val(), 10),
                 traceback: [false, false, false, false]
             });
         });

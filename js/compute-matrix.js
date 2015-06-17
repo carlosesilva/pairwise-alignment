@@ -94,7 +94,7 @@ function computeMatrix (mode,sequence1,sequence2,matchScore,mismatchScore,gapPen
 
             // gather traceback information
             var traceback = tempArr.map(function(elem) {
-                return (max === elem);
+                return +(max === elem);
             });
 
             // supplement the fourth entry for the traceback array for when the mode is not local

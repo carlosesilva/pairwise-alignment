@@ -7,8 +7,6 @@ function traceback(mode,matrix,sequence1,sequence2){
 
 
 
-    // I need the mode, the matrix(in this case the correct one)
-
     // initialize variables
     var i, j, current,
     tracedCells = [],
@@ -140,7 +138,7 @@ function printTraceback (traceback,matrixTable,alignmentContainer) {
     // Loop through tracedCells and updated matrixTable and alignmentContainer
     for (var k = 0; k < traceback.tracedCells.length; k++) {
         // Add traced class to matrixTable cells that are part of alignment
-        matrixTable.find('tr').eq(traceback.tracedCells[k].i).find('td').eq(traceback.tracedCells[k].j).find('input').addClass('traced');
+        matrixTable.find('tr').eq(traceback.tracedCells[k].i).find('td').eq(traceback.tracedCells[k].j).find('.dynamicProgrammingMatrixCell').addClass('traced');
 
         // Construct matchMismatch which holds the visual representation between both sequences in the alignment (e.g. X for mismatch, | for matches, &nbsp; for gap)
         if (traceback.alignment[0][k] === '-' || traceback.alignment[1][k] === '-'){
