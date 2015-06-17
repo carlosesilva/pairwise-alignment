@@ -32,8 +32,23 @@ function computeMatrix (mode,sequence1,sequence2,matchScore,mismatchScore,gapPen
             };
         }
     }
-    else {
-        // semi and local stuff
+    else if (mode === 'semi'){
+        // semi stuff
+        for (var i = 1; i<=m;i++){
+            S[i][0] = {
+                score: 0,
+                traceback: [false, true, false, false] // vertical
+            };
+        }
+        for (var j = 1; j<=n;j++){
+            S[0][j] = {
+                score: 0,
+                traceback: [false, false, true, false] // horizontal
+            };
+        }
+    }
+    else if (mode === 'local'){
+        // local stuff
         for (var i = 1; i<=m;i++){
             S[i][0] = {
                 score: 0,

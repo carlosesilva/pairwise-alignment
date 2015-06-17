@@ -18,5 +18,13 @@
     - the tool itself (just redo the old tool with new stuff)
     - the holdmybeer (the page where user enter info and receives feedback) 
 * Improve traceback
+    - ~~fix semi global traceback~~
+    - find all possible alignments
     - add arrows to cells
+* Add place to enter result alignment by user
+* Create Modes
+    - Learning (guided mode)
+    - Practice
+        + Instant Feedback
+        + Delayed Feedback
 * Design UI/UX

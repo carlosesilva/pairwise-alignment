@@ -49,6 +49,21 @@ function traceback(mode,matrix,sequence1,sequence2){
                 max.j = j;
             }
         }
+        // Add gaps to end if needed
+        if (max.i < m-1){
+            for (var k = m - 1; k > max.i; k--) {
+                tracedCells.push({i:k,j:n-1});
+                alignment1.unshift(sequence1[k-1]);
+                alignment2.unshift('-');
+            }
+        } else if (max.j < n-1){
+            for (var k = n - 1; k > max.j; k--) {
+                tracedCells.push({i:m-1,j:k});
+                alignment1.unshift('-');
+                alignment2.unshift(sequence2[k-1]);
+            }
+        }
+        // Set starting point cell (current) to the max value found and update our iterators i and j
         current = matrix[max.i][max.j];
         tracedCells.push({i: max.i,j: max.j});
         i = max.i;
