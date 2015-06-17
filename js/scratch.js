@@ -36,9 +36,7 @@ $(document).ready(function(){
     $('#process').click(function(event) {
         process();
     });
-
-
-
+        
 
 
 

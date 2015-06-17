@@ -32,6 +32,17 @@ function buildDynamicProgrammingMatrix(seq1, seq2){
         result += '<tr>';
         for (var j = -1; j<seq2.length; j++){
             result += '<td>';
+            result += '<select class="tracebackSelect" tabindex="-1">';
+            result += '<option value="0">?</option>';
+            result += '<option value="1">1</option>';
+            result += '<option value="2">2</option>';
+            result += '<option value="3">3</option>';
+            result += '<option value="4">4</option>';
+            result += '<option value="5">5</option>';
+            result += '<option value="6">6</option>';
+            result += '<option value="7">7</option>';
+            result += '<option value="8">8</option>';
+            result += '</select>';
             result += '<input type="text" class="dynamicProgrammingMatrixCell" pattern="^-?\\d+" i="' + (i+1) + '" j="' + (j+1) + '"/>';
             result += '</td>';
         }

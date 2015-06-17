@@ -12,7 +12,7 @@ function computeMatrix (mode,sequence1,sequence2,matchScore,mismatchScore,gapPen
     // Set the first element trace-back information to -1 so the traceback function knows when to stop
     S[0][0] = {
         score: 0,
-        traceback: [false, false, false, true]
+        traceback: [0, 0, 0, 1]
     };
 
 
@@ -22,13 +22,13 @@ function computeMatrix (mode,sequence1,sequence2,matchScore,mismatchScore,gapPen
         for (var i = 1; i<=m;i++){
             S[i][0] = {
                 score: S[i-1][0].score + gapPenalty,
-                traceback: [false, true, false, false] // vertical
+                traceback: [0, 1, 0, 0] // vertical
             };
         }
         for (var j = 1; j<=n;j++){
             S[0][j] = {
                 score: S[0][j-1].score + gapPenalty,
-                traceback: [false, false, true, false] // horizontal
+                traceback: [0, 0, 1, 0] // horizontal
             };
         }
     }
@@ -37,13 +37,13 @@ function computeMatrix (mode,sequence1,sequence2,matchScore,mismatchScore,gapPen
         for (var i = 1; i<=m;i++){
             S[i][0] = {
                 score: 0,
-                traceback: [false, true, false, false] // vertical
+                traceback: [0, 1, 0, 0] // vertical
             };
         }
         for (var j = 1; j<=n;j++){
             S[0][j] = {
                 score: 0,
-                traceback: [false, false, true, false] // horizontal
+                traceback: [0, 0, 1, 0] // horizontal
             };
         }
     }
@@ -52,13 +52,13 @@ function computeMatrix (mode,sequence1,sequence2,matchScore,mismatchScore,gapPen
         for (var i = 1; i<=m;i++){
             S[i][0] = {
                 score: 0,
-                traceback: [false, false, false, true] // vertical
+                traceback: [0, 0, 0, 1] // vertical
             };
         }
         for (var j = 1; j<=n;j++){
             S[0][j] = {
                 score: 0,
-                traceback: [false, false, false, true] // horizontal
+                traceback: [0, 0, 0, 1] // horizontal
             };
         }
     }
@@ -99,7 +99,7 @@ function computeMatrix (mode,sequence1,sequence2,matchScore,mismatchScore,gapPen
 
             // supplement the fourth entry for the traceback array for when the mode is not local
             if (mode !== 'local'){
-                traceback[3] = false;
+                traceback[3] = 0;
             }
 
             // set S[i][j] calculated max score and traceback information
