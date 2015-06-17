@@ -93,9 +93,9 @@ function traceback(mode,matrix,sequence1,sequence2){
 
     // current.traceback is an array with 4 elements
     // Elements are booleans. It is expected that atleast one is true
-    // current.traceback[3] when set to true represents end of path
-    while(!current.traceback[3]){
-        if (current.traceback[0]){
+    // current.traceback[0] when set to true represents end of path
+    while(!current.traceback[0]){
+        if (current.traceback[3]){
             // [0] represents diagonal path next is S[i-1][j-1]
             // update i and j and current
             i--;
@@ -104,7 +104,7 @@ function traceback(mode,matrix,sequence1,sequence2){
             tracedCells.push({i: i,j: j});
             alignment1.unshift(sequence1[i]);
             alignment2.unshift(sequence2[j]);
-        } else if (current.traceback[1]){
+        } else if (current.traceback[2]){
             // [1] represents vertical path next is S[i-1][j]
             // update i and current
             i--;
@@ -112,7 +112,7 @@ function traceback(mode,matrix,sequence1,sequence2){
             tracedCells.push({i: i,j: j});
             alignment1.unshift(sequence1[i]);
             alignment2.unshift('-');
-        } else if (current.traceback[2]){
+        } else if (current.traceback[1]){
             // [2] represents horizontal path next is S[i][j-1]
             // update j and current
             j--;

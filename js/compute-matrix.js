@@ -12,7 +12,7 @@ function computeMatrix (mode,sequence1,sequence2,matchScore,mismatchScore,gapPen
     // Set the first element trace-back information to -1 so the traceback function knows when to stop
     S[0][0] = {
         score: 0,
-        traceback: [0, 0, 0, 1]
+        traceback: [1, 0, 0, 0]
     };
 
 
@@ -22,13 +22,13 @@ function computeMatrix (mode,sequence1,sequence2,matchScore,mismatchScore,gapPen
         for (var i = 1; i<=m;i++){
             S[i][0] = {
                 score: S[i-1][0].score + gapPenalty,
-                traceback: [0, 1, 0, 0] // vertical
+                traceback: [0, 0, 1, 0] // vertical
             };
         }
         for (var j = 1; j<=n;j++){
             S[0][j] = {
                 score: S[0][j-1].score + gapPenalty,
-                traceback: [0, 0, 1, 0] // horizontal
+                traceback: [0, 1, 0, 0] // horizontal
             };
         }
     }
@@ -37,28 +37,28 @@ function computeMatrix (mode,sequence1,sequence2,matchScore,mismatchScore,gapPen
         for (var i = 1; i<=m;i++){
             S[i][0] = {
                 score: 0,
-                traceback: [0, 1, 0, 0] // vertical
+                traceback: [0, 0, 1, 0] // vertical
             };
         }
         for (var j = 1; j<=n;j++){
             S[0][j] = {
                 score: 0,
-                traceback: [0, 0, 1, 0] // horizontal
+                traceback: [0, 1, 0, 0] // horizontal
             };
         }
     }
     else if (mode === 'local'){
         // local stuff
-        for (var i = 1; i<=m;i++){
+        for (var i = 1; i<=m; i++){
             S[i][0] = {
                 score: 0,
-                traceback: [0, 0, 0, 1] // vertical
+                traceback: [1, 0, 0, 0]
             };
         }
-        for (var j = 1; j<=n;j++){
+        for (var j = 1; j<=n; j++){
             S[0][j] = {
                 score: 0,
-                traceback: [0, 0, 0, 1] // horizontal
+                traceback: [1, 0, 0, 0]
             };
         }
     }
@@ -82,11 +82,11 @@ function computeMatrix (mode,sequence1,sequence2,matchScore,mismatchScore,gapPen
             }
             
             // get value of the 3 options and put it into a tempArr
-            var tempArr = [ (S[i-1][j-1].score + similarityScore), (S[i-1][j].score + gapPenalty), (S[i][j-1].score + gapPenalty) ];
+            var tempArr = [(S[i][j-1].score + gapPenalty), (S[i-1][j].score + gapPenalty), (S[i-1][j-1].score + similarityScore)];
             
             // for local mode consider the value 0 as an option for the max function
             if (mode === 'local'){
-                tempArr.push(0);
+                tempArr.unshift(0);
             }
 
             // find max element in array
@@ -99,7 +99,7 @@ function computeMatrix (mode,sequence1,sequence2,matchScore,mismatchScore,gapPen
 
             // supplement the fourth entry for the traceback array for when the mode is not local
             if (mode !== 'local'){
-                traceback[3] = 0;
+                traceback.unshift(0);
             }
 
             // set S[i][j] calculated max score and traceback information
