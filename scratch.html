@@ -9,11 +9,11 @@
 	<div id="wrapper" class="left">
 		<h1>Pairwise Alignment</h1>
 		<div id="options">
-			sequence1: <input type="text" name="" id="sequence1" value="THISLINE"/>
-			sequence2: <input type="text" name="" id="sequence2" value="ISALIGNED"/><br><br>
-			matchScore: <input type="text" name="" id="matchScore" value="3"/>
-			mismatchScore: <input type="text" name="" id="mismatchScore" value="0"/>
-			gapPenalty: <input type="text" name="" id="gapPenalty" value="-5"/><br><br>
+			sequence1: <input type="text" name="" id="sequence1" value="GATTACA"/>
+			sequence2: <input type="text" name="" id="sequence2" value="GCATGCU"/><br><br>
+			matchScore: <input type="text" name="" id="matchScore" value="1"/>
+			mismatchScore: <input type="text" name="" id="mismatchScore" value="-1"/>
+			gapPenalty: <input type="text" name="" id="gapPenalty" value="-1"/><br><br>
 			mode: 
 			<select name="" id="mode">
 				<option value="global">global</option>
@@ -26,8 +26,11 @@
 			<br><br><br>
 		</div>
 		
-		Input:
+		Input Matrix:
 		<div id="inputTableContainer" class="dynamicProgrammingMatrixWrapper"></div>
+		<br><br>
+		Input Alignment:
+		<div id="inputAlignmentContainer" class=""></div>
 	</div>
 
 	<div id="testing" class="right">
@@ -38,7 +41,7 @@
 		<br><br>
 		Correct Matrix:
 		<div id="correctMatrix" class="dynamicProgrammingMatrixWrapper"></div>
-		Correct Alignment:
+		Correct Alignments:
 		<div id="correctAlignment" class="alignmentContainer"></div>
 	</div>
 

@@ -1,3 +1,5 @@
+
+
 // Function traceback()
 function traceback(mode,matrix,sequence1,sequence2){
 
@@ -11,7 +13,8 @@ function traceback(mode,matrix,sequence1,sequence2){
     var i, j, current,
     tracedCells = [],
     alignment1 = [],
-    alignment2 = [];
+    alignment2 = [],
+    results = [];
 
 
     // Extract matrix dimensions
@@ -88,13 +91,33 @@ function traceback(mode,matrix,sequence1,sequence2){
         j = max.j;
     }
 
+    console.log('before calling traverse (inside traceback())', 't=0');
+    start = new Date().getTime();
+    return traverse(JSON.parse(JSON.stringify(matrix)), sequence1, sequence2, i, j, JSON.parse(JSON.stringify(tracedCells)), JSON.parse(JSON.stringify(alignment1)), JSON.parse(JSON.stringify(alignment2)), results);
+    
+    
+}
+recursionCounter = 0;
+function traverse (matrix, sequence1, sequence2, i, j, tracedCells, alignment1, alignment2, results) {
+    var current = matrix[i][j];
+    var now = new Date().getTime();
+    var thisRecursion = recursionCounter;
+    recursionCounter++;
+    console.log('Begin: traverse('+ (thisRecursion) +') start', 't=' + ( now - start) );
 
-    // current.traceback is an array with 4 elements
-    // Elements are booleans. It is expected that atleast one is true
-    // current.traceback[0] when set to true represents end of path
-    while(!current.traceback[0]){
+    while( !current.traceback[0] ){
         if (current.traceback[3]){
-            // [0] represents diagonal path next is S[i-1][j-1]
+            // [3] represents diagonal path next is S[i-1][j-1]
+            
+            // turn path flag off (matrix here is passed by value so no problem in modifying it)
+            current.traceback[3] = 0;
+
+            // if there are other paths, call traverse again;
+            // traverse stopping condition( when current.traceback == [1,0,0,0]) will always be met at some point since S(0,0).traceback always equals [1,0,0,0]
+            if ( current.traceback.slice(1).join('') !== '000' ){
+                traverse(JSON.parse(JSON.stringify(matrix)), sequence1, sequence2, i, j, JSON.parse(JSON.stringify(tracedCells)), JSON.parse(JSON.stringify(alignment1)), JSON.parse(JSON.stringify(alignment2)), results);
+            }
+
             // update i and j and current
             i--;
             j--;
@@ -103,7 +126,17 @@ function traceback(mode,matrix,sequence1,sequence2){
             alignment1.unshift(sequence1[i]);
             alignment2.unshift(sequence2[j]);
         } else if (current.traceback[2]){
-            // [1] represents vertical path next is S[i-1][j]
+            // [2] represents vertical path next is S[i-1][j]
+            
+            // turn path flag off (matrix here is passed by value so no problem in modifying it)
+            current.traceback[2] = 0;
+
+            // if there are other paths, call traverse again;
+            // traverse stopping condition( when current.traceback == [1,0,0,0]) will always be met at some point since S(0,0).traceback always equals [1,0,0,0]
+            if ( current.traceback.slice(1).join('') !== '000' ){
+                traverse(JSON.parse(JSON.stringify(matrix)), sequence1, sequence2, i, j, JSON.parse(JSON.stringify(tracedCells)), JSON.parse(JSON.stringify(alignment1)), JSON.parse(JSON.stringify(alignment2)), results);
+            }
+
             // update i and current
             i--;
             current = matrix[i][j];
@@ -111,7 +144,17 @@ function traceback(mode,matrix,sequence1,sequence2){
             alignment1.unshift(sequence1[i]);
             alignment2.unshift('-');
         } else if (current.traceback[1]){
-            // [2] represents horizontal path next is S[i][j-1]
+            // [1] represents horizontal path next is S[i][j-1]
+            
+            // turn path flag off (matrix here is passed by value so no problem in modifying it)
+            current.traceback[1] = 0;
+
+            // if there are other paths, call traverse again;
+            // traverse stopping condition( when current.traceback == [1,0,0,0]) will always be met at some point since S(0,0).traceback always equals [1,0,0,0]
+            if ( current.traceback.slice(1).join('') !== '000' ){
+                traverse(JSON.parse(JSON.stringify(matrix)), sequence1, sequence2, i, j, JSON.parse(JSON.stringify(tracedCells)), JSON.parse(JSON.stringify(alignment1)), JSON.parse(JSON.stringify(alignment2)), results);
+            }
+            
             // update j and current
             j--;
             current = matrix[i][j];
@@ -120,39 +163,50 @@ function traceback(mode,matrix,sequence1,sequence2){
             alignment2.unshift(sequence2[j]);
         }
     }
-    // We've reached a traceback with no path, lets end the traceback function
-    // most likely we will use "return" here
 
-    return {
+    results.push({
         tracedCells: tracedCells,
         alignment: [alignment1, alignment2]
-    };
-    
-    
+    });
+
+    var now = new Date().getTime();
+    console.log('End: traverse('+ (thisRecursion) +') start', 't=' + ( now - start) );
+    return results;
+
 }
 
 
+
+
+
+
+
 function printTraceback (traceback,matrixTable,alignmentContainer) {
-    var matchMismatch = [];
+    // Reset alignmentContainer to empty in case there were previous runs
+    alignmentContainer.html('');
 
-    // Loop through tracedCells and updated matrixTable and alignmentContainer
-    for (var k = 0; k < traceback.tracedCells.length; k++) {
-        // Add traced class to matrixTable cells that are part of alignment
-        matrixTable.find('tr').eq(traceback.tracedCells[k].i).find('td').eq(traceback.tracedCells[k].j).find('.dynamicProgrammingMatrixCell').addClass('traced');
+    // Loop through all possibles tracebacks
+    for (var i = 0; i < traceback.length; i++) {
+        var matchMismatch = [];
+        // Loop through tracedCells and updated matrixTable and alignmentContainer
+        for (var k = 0; k < traceback[i].tracedCells.length; k++) {
+            // Add traced class to matrixTable cells that are part of alignment
+            matrixTable.find('tr').eq(traceback[i].tracedCells[k].i).find('td').eq(traceback[i].tracedCells[k].j).find('.dynamicProgrammingMatrixCell').addClass('traced' + i);
 
-        // Construct matchMismatch which holds the visual representation between both sequences in the alignment (e.g. X for mismatch, | for matches, &nbsp; for gap)
-        if (traceback.alignment[0][k] === '-' || traceback.alignment[1][k] === '-'){
-            matchMismatch.push('&nbsp;');
-        } else if (traceback.alignment[0][k] === traceback.alignment[1][k]){
-            matchMismatch.push('|');
-        } else{
-            matchMismatch.push('X');
+            // Construct matchMismatch which holds the visual representation between both sequences in the alignment (e.g. X for mismatch, | for matches, &nbsp; for gap)
+            if (traceback[i].alignment[0][k] === '-' || traceback[i].alignment[1][k] === '-'){
+                matchMismatch.push('&nbsp;');
+            } else if (traceback[i].alignment[0][k] === traceback[i].alignment[1][k]){
+                matchMismatch.push('|');
+            } else{
+                matchMismatch.push('X');
+            }
         }
+
+        // The above loop gives matchMismatch an extra undesired character (runs one time too long) so we will remove it with .pop()
+        matchMismatch.pop();
+
+        // display alignment
+        alignmentContainer.append( traceback[i].alignment[0].join('') + '<br>' + matchMismatch.join('') + '<br>' + traceback[i].alignment[1].join('') + '<br><br><br>');
     }
-
-    // The above loop gives matchMismatch an extra undesired character (runs one time too long) so we will remove it with .pop()
-    matchMismatch.pop();
-
-    // display alignment
-    alignmentContainer.html( traceback.alignment[0].join('') + '<br>' + matchMismatch.join('') + '<br>' + traceback.alignment[1].join('') );
 }

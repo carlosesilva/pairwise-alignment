@@ -1,5 +1,24 @@
 $(document).ready(function(){
 
+
+
+
+
+    process();
+    
+    $('#sequence1, #sequence2, #matchScore, #mismatchScore, #gapPenalty, #mode, #instantFeedback, #showTestingInfo').change(function(event) {
+        process();
+    });
+
+
+    $('#process').click(function(event) {
+        process();
+    });
+        
+
+
+
+
     /*=============================
     =            UI/UX            =
     =============================*/
@@ -21,22 +40,6 @@ $(document).ready(function(){
     
     /*-----  End of UI/UX  ------*/
     
-
-
-
-
-
-    process();
-    
-    $('#sequence1, #sequence2, #matchScore, #mismatchScore, #gapPenalty, #mode, #instantFeedback, #showTestingInfo').change(function(event) {
-        process();
-    });
-
-
-    $('#process').click(function(event) {
-        process();
-    });
-        
 
 
 
@@ -87,14 +90,16 @@ function process () {
     
     // Instant feedback
     if (instantFeedback){
-        $('#inputTableContainer .dynamicProgrammingMatrixCell, #inputTableContainer .tracebackSelect').on('focusout', function(event) {
+        $('#inputTableContainer .dynamicProgrammingMatrixCell').on('change', function(event) {
             // validate input again in case .keyup() failed e.g. value was pasted in, dragged in
             $(this).val(filterInteger($(this).val()));
-            var inputMatrix = readMatrix($('#inputTableContainer .dynamicProgrammingMatrix'));
-            displayFeedback($('#inputTableContainer .dynamicProgrammingMatrix'), compareMatrices(correctMatrix, inputMatrix));
+            displayFeedback($('#inputTableContainer .dynamicProgrammingMatrix'), compareMatrices(correctMatrix, readMatrix($('#inputTableContainer .dynamicProgrammingMatrix'))));
+        });
+        $('#inputTableContainer .tracebackSelect').on('change', function(event) {
+            displayFeedback($('#inputTableContainer .dynamicProgrammingMatrix'), compareMatrices(correctMatrix, readMatrix($('#inputTableContainer .dynamicProgrammingMatrix'))));
         });
     }else{
-        $('#inputTableContainer .dynamicProgrammingMatrixCell').off('focusout');
+        $('#inputTableContainer .dynamicProgrammingMatrixCell, #inputTableContainer .tracebackSelect').off('focusout change');
     }
 
 

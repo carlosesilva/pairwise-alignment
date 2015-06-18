@@ -34,7 +34,13 @@ $matrix-cell-border : 1px solid $color-theme-2 !default;
     .dynamicProgrammingMatrixCell.wrong{
         background-color: red;
     }
-    .dynamicProgrammingMatrixCell.traced{
+    .dynamicProgrammingMatrixCell.traced2{
+        background-color: lighten(#00f, 45%);
+    }
+    .dynamicProgrammingMatrixCell.traced1{
+        background-color: lighten(#00f, 40%);
+    }
+    .dynamicProgrammingMatrixCell.traced0{
         background-color: blue;
     }
 

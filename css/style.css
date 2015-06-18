@@ -60,7 +60,13 @@ body {
 .dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrixCell.wrong {
   background-color: red; }
 
-.dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrixCell.traced {
+.dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrixCell.traced2 {
+  background-color: #e5e5ff; }
+
+.dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrixCell.traced1 {
+  background-color: #ccccff; }
+
+.dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrixCell.traced0 {
   background-color: blue; }
 
 .dynamicProgrammingMatrixWrapper .tracebackSelect {
