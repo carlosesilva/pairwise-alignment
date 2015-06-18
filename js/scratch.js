@@ -87,7 +87,7 @@ function process () {
     
     // Instant feedback
     if (instantFeedback){
-        $('#inputTableContainer .dynamicProgrammingMatrixCell').on('focusout', function(event) {
+        $('#inputTableContainer .dynamicProgrammingMatrixCell, #inputTableContainer .tracebackSelect').on('focusout', function(event) {
             // validate input again in case .keyup() failed e.g. value was pasted in, dragged in
             $(this).val(filterInteger($(this).val()));
             var inputMatrix = readMatrix($('#inputTableContainer .dynamicProgrammingMatrix'));
