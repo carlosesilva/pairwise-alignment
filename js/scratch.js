@@ -1,6 +1,15 @@
+// Declare global variables
+var sequence1,
+sequence2,
+matchScore,
+mismatchScore,
+gapPenalty,
+mode,
+instantFeedback,
+correctMatrix,
+correctTraceback; 
+
 $(document).ready(function(){
-
-
 
 
 
@@ -70,18 +79,21 @@ function evaluate (argument) {
 
 function process () {
 
-    // initialize global variables
+    // set global variables
     sequence1 = $("#sequence1").val();
     sequence2 = $("#sequence2").val();
     matchScore = parseInt($("#matchScore").val(),10);
     mismatchScore = parseInt($("#mismatchScore").val(),10);
     gapPenalty = parseInt($("#gapPenalty").val(),10);
     mode = $("#mode").val();
-    var instantFeedback = $("#instantFeedback")[0].checked;
+    instantFeedback = $("#instantFeedback")[0].checked;
 
 
     // calculate correct matrix array
     correctMatrix = computeMatrix(mode,sequence1,sequence2,matchScore,mismatchScore,gapPenalty);
+
+    // calculate traceback
+    correctTraceback = traceback(mode, correctMatrix, sequence1, sequence2);
 
 
     // Build input matrix
@@ -121,7 +133,7 @@ function process () {
 
 
         // test traceback
-        printTraceback(traceback(mode, correctMatrix, sequence1, sequence2), $('#correctMatrix').find('.dynamicProgrammingMatrix'), $('#correctAlignment'));
+        printTraceback(correctTraceback, $('#correctMatrix').find('.dynamicProgrammingMatrix'), $('#correctAlignment'));
 
         $('#testing').show().prev().addClass('left');
 

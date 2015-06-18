@@ -2,6 +2,8 @@ $matrix-cell-width : 50px !default;
 $matrix-cell-border : 1px solid $color-theme-2 !default;
 
 .dynamicProgrammingMatrixWrapper {
+    margin: 0 auto;
+
     td{
         position: relative;
     }
@@ -65,6 +67,23 @@ $matrix-cell-border : 1px solid $color-theme-2 !default;
     }
 
 
+}
+
+.inputAlignmentWrapper{
+    margin: 0 auto;
+    
+    tr{
+        display: block;
+        margin-bottom: 10px;
+    }
+    .alignmentInputCell{
+        width: $matrix-cell-width;
+        height: $matrix-cell-width;
+        text-align: center;
+        background-color: $gray-lighter;
+        border: $matrix-cell-border;
+        color: $gray;
+    }
 }
 
 
