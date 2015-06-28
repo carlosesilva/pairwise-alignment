@@ -118,10 +118,7 @@ input {
   border-left: 1px solid #9EDBFA; }
 
 .alignmentContainer {
-  font-family: "Lucida Console", Monaco, monospace;
-  font-size: 20px;
-  letter-spacing: 5px;
-  line-height: 1em; }
+  line-height: 20px; }
   .alignmentContainer > div {
     display: -webkit-box;
     display: -webkit-flex;
@@ -130,11 +127,17 @@ input {
     -webkit-box-pack: center;
     -webkit-justify-content: center;
         -ms-flex-pack: center;
-            justify-content: center; }
+            justify-content: center;
+    margin: 10px 0 30px; }
   .alignmentContainer .alignmentSelectorLabel {
-    text-align: left; }
+    text-align: right; }
+    .alignmentContainer .alignmentSelectorLabel .alignmentSelectorRadio {
+      margin-right: 30px; }
   .alignmentContainer .alignment {
-    text-align: left; }
+    text-align: left;
+    font-family: "Lucida Console", Monaco, monospace;
+    font-size: 20px;
+    letter-spacing: 5px; }
 
 .tracebackSelect {
   position: absolute;

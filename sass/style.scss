@@ -44,22 +44,26 @@ input{
 }
 
 .alignmentContainer{
-    font-family: "Lucida Console", Monaco, monospace;
-    font-size: 20px;
-    letter-spacing: 5px;
-    line-height: 1em;
+    
+    line-height: 20px;
 
     > div{        
         display: flex;
         justify-content: center;
+        margin: 10px 0 30px;
     }
 
     .alignmentSelectorLabel{
-        text-align: left;
-        
+        text-align: right;
+        .alignmentSelectorRadio{
+            margin-right: 30px;
+        }
     }
     .alignment{
         text-align: left;
+        font-family: "Lucida Console", Monaco, monospace;
+        font-size: 20px;
+        letter-spacing: 5px;
     }
 }
 
