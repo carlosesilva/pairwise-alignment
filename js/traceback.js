@@ -10,7 +10,7 @@ function traceback(mode,matrix,sequence1,sequence2){
 
 
     // initialize variables
-    var i, j, current, max2,
+    var i, j, current, max,
     startingPoints = [],
     results = [];
 
@@ -31,62 +31,45 @@ function traceback(mode,matrix,sequence1,sequence2){
             alignment2: []
         });
     } else if (mode === "semi"){
-        // find max element from last row or last column
-        var max = {
-            i: m-1,
-            j: n-1,
-            score: matrix[m-1][n-1].score
-        };
-
         // find all max elements from last row or last column
-        max2 = {
+        max = {
             pos: [],
             score: matrix[m-1][n-1].score
         };
+
         // loop through last column
         for (var i = 0; i < m; i++) {
             if (max.score < matrix[i][n-1].score){
+                max.pos = [{i:i,j:n-1}];
                 max.score = matrix[i][n-1].score;
-                max.i = i;
-                max.j = n-1;
-
-
-                max2.pos = [{i:i,j:n-1}];
-                max2.score = matrix[i][n-1].score;
             } else if (max.score === matrix[i][n-1].score){
-                max2.pos.push({i:i,j:n-1});
+                max.pos.push({i:i,j:n-1});
             }
         }
         // loop through last row
         for (var j = 0; j < n; j++) {
             if (max.score < matrix[m-1][j].score){
+                max.pos = [{i:m-1,j:j}];
                 max.score = matrix[m-1][j].score;
-                max.i = m-1;
-                max.j = j;
-
-                max2.pos = [{i:m-1,j:j}];
-                max2.score = matrix[m-1][j].score;
             } else if (max.score === matrix[m-1][j].score){
-                max2.pos.push({i:m-1,j:j});
+                max.pos.push({i:m-1,j:j});
             }
         }
         // Here we will loop through all max values, creating our possibly many starting points for semi global mode
-        for (var k = 0; k < max2.pos.length; k++) {
+        for (var k = 0; k < max.pos.length; k++) {
             // Add gaps to end if needed
             var tracedCellsTEMP = [],
             alignment1TEMP = [],
             alignment2TEMP = [];
 
-            if (max2.pos[k].i < m-1){
-                console.log('test');
-                for (var w = m-1; w > max2.pos[k].i; w--) {
+            if (max.pos[k].i < m-1){
+                for (var w = m-1; w > max.pos[k].i; w--) {
                     tracedCellsTEMP.push({i:w,j:n-1});
                     alignment1TEMP.unshift(sequence1[w-1]);
                     alignment2TEMP.unshift('-');
                 }
-            } else if (max2.pos[k].j < n-1){
-                console.log('test2');
-                for (var w = n - 1; w > max2.pos[k].j; w--) {
+            } else if (max.pos[k].j < n-1){
+                for (var w = n - 1; w > max.pos[k].j; w--) {
                     tracedCellsTEMP.push({i:m-1,j:w});
                     alignment1TEMP.unshift('-');
                     alignment2TEMP.unshift(sequence2[w-1]);
@@ -94,80 +77,47 @@ function traceback(mode,matrix,sequence1,sequence2){
             }
 
             // push starting point cell to 
-            tracedCellsTEMP.push({i:max2.pos[k].i,j:max2.pos[k].j});
+            tracedCellsTEMP.push({i:max.pos[k].i,j:max.pos[k].j});
 
             // add startingPoint to startingPoints array
             startingPoints.push({
-                i: max2.pos[k].i,
-                j: max2.pos[k].j,
+                i: max.pos[k].i,
+                j: max.pos[k].j,
                 tracedCells: JSON.parse(JSON.stringify(tracedCellsTEMP)),
                 alignment1: JSON.parse(JSON.stringify(alignment1TEMP)),
                 alignment2: JSON.parse(JSON.stringify(alignment2TEMP))
             });
         }
-
-        // // Add gaps to end if needed
-        // if (max.i < m-1){
-        //     for (var k = m - 1; k > max.i; k--) {
-        //         tracedCells.push({i:k,j:n-1});
-        //         alignment1.unshift(sequence1[k-1]);
-        //         alignment2.unshift('-');
-        //     }
-        // } else if (max.j < n-1){
-        //     for (var k = n - 1; k > max.j; k--) {
-        //         tracedCells.push({i:m-1,j:k});
-        //         alignment1.unshift('-');
-        //         alignment2.unshift(sequence2[k-1]);
-        //     }
-        // }
-        // // Set starting point cell (current) to the max value found and update our iterators i and j
-        // current = matrix[max.i][max.j];
-        // tracedCells.push({i: max.i,j: max.j});
-        // i = max.i;
-        // j = max.j;
     } else {
         // Mode = local
-        // find max element overall
-        var max = {
-            i: m-1,
-            j: n-1,
-            score: matrix[m-1][n-1].score
-        };
-
-        max2 = {
+        // find all max elements overall
+        max = {
             pos: [],
             score: 1
         };
         for (var i = 0; i < m; i++) {
             for (var j = 0; j < n; j++) {
                 if (max.score < matrix[i][j].score){
+                    max.pos = [{i:i,j:j}];
                     max.score = matrix[i][j].score;
-                    max.i = i;
-                    max.j = j;
-
-
-                    max2.pos = [{i:i,j:j}];
-                    max2.score = matrix[i][j].score;
                 } else if (max.score === matrix[i][j].score){
-                    max2.pos.push({i:i,j:j});
+                    max.pos.push({i:i,j:j});
                 }
             }
         }
-        // tracedCells.push({i: max2.pos[0].i,j: max2.pos[0].j});
-        // i = max2.pos[0].i;
-        // j = max2.pos[0].j;
 
-        for (var k = 0; k < max2.pos.length; k++) {
+        // Loop through max elements and create startingPoints
+        for (var k = 0; k < max.pos.length; k++) {
             startingPoints.push({
-                i: max2.pos[k].i,
-                j: max2.pos[k].j,
-                tracedCells: [{i: max2.pos[k].i,j: max2.pos[k].j}],
+                i: max.pos[k].i,
+                j: max.pos[k].j,
+                tracedCells: [{i: max.pos[k].i,j: max.pos[k].j}],
                 alignment1: [],
                 alignment2: []
             });
         }
     }
-    console.log(max2);
+    console.log(max);
     console.log(startingPoints);
     console.log('before calling traverse (inside traceback())', 't=0');
     start = new Date().getTime();
