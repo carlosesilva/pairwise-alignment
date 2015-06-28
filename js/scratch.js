@@ -24,9 +24,6 @@ $(document).ready(function(){
     $('#process').click(function(event) {
         process();
     });
-        
-
-
 
 
     /*=============================
@@ -47,6 +44,21 @@ $(document).ready(function(){
         var inputMatrix = readMatrix($('#inputTableContainer .dynamicProgrammingMatrix'));
         displayFeedback($('#inputTableContainer .dynamicProgrammingMatrix'), compareMatrices(correctMatrix, inputMatrix));
     });
+
+
+
+    // compare alignments when button is clicked
+    $('#compareAlignment').click(function(event) {
+        var alignmentInput1 = $('#alignmentInput1').val().toUpperCase();
+        var alignmentInput2 = $('#alignmentInput2').val().toUpperCase();
+        if (compareAlignment(alignmentInput1,alignmentInput2,correctTraceback)) {
+            $('#alignmentInput1,#alignmentInput2').removeClass('wrong').addClass('correct');
+        }else{
+            $('#alignmentInput1,#alignmentInput2').removeClass('correct').addClass('wrong');
+        }
+    });
+
+
     
     /*-----  End of UI/UX  ------*/
     
@@ -67,11 +79,6 @@ function filterInteger(val){
     //  this.value = (this.value[0] === '-') ? ('-' + this.value.replace(/[^0-9]/g, '')) : (this.value.replace(/[^0-9]/g, ''));
 }
 
-function evaluate (argument) {
-    // body...
-}
-
-
 
 
 
@@ -82,8 +89,8 @@ function process () {
     console.log('---------------\nBegin process()\n---------------');
     // set global variables
     // 
-    sequence1 = $("#sequence1").val();
-    sequence2 = $("#sequence2").val();
+    sequence1 = $("#sequence1").val().toUpperCase();
+    sequence2 = $("#sequence2").val().toUpperCase();
     matchScore = parseInt($("#matchScore").val(),10);
     mismatchScore = parseInt($("#mismatchScore").val(),10);
     gapPenalty = parseInt($("#gapPenalty").val(),10);
@@ -161,6 +168,16 @@ function process () {
 
 
 
+
+function compareAlignment (input1,input2,traceback) {
+    // Loop through all possibles tracebacks
+    for (var i = 0; i < traceback.length; i++) {
+        if (input1 === traceback[i].alignment[0].join('') && input2 === traceback[i].alignment[1].join('')){
+            return true;
+        }
+    }
+    return false;
+}
 
 
 

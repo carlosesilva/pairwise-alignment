@@ -76,19 +76,6 @@ body {
     .dynamicProgrammingMatrixWrapper .tracebackSelect.wrong {
       background-color: #db0000; }
 
-.inputAlignmentWrapper {
-  margin: 0 auto; }
-  .inputAlignmentWrapper tr {
-    display: block;
-    margin-bottom: 10px; }
-  .inputAlignmentWrapper .alignmentInputCell {
-    width: 50px;
-    height: 50px;
-    text-align: center;
-    background-color: #eeeeee;
-    border: 1px solid #9EDBFA;
-    color: #555555; }
-
 body {
   text-align: center; }
 
@@ -139,20 +126,11 @@ input {
     font-size: 20px;
     letter-spacing: 5px; }
 
-.tracebackSelect {
-  position: absolute;
-  top: 1px;
-  left: 1px;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  background-color: #aaa;
-  border: none;
-  font-size: 10px;
+.alignmentInput {
   font-family: "Lucida Console", Monaco, monospace;
-  border-radius: 0;
-  padding: 4px; }
-  .tracebackSelect.correct {
-    background-color: #006700; }
-  .tracebackSelect.wrong {
-    background-color: #db0000; }
+  font-size: 20px;
+  letter-spacing: 5px; }
+  .alignmentInput.wrong {
+    background-color: red; }
+  .alignmentInput.correct {
+    background-color: green; }
