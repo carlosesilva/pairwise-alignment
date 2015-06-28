@@ -11,9 +11,6 @@ function traceback(mode,matrix,sequence1,sequence2){
 
     // initialize variables
     var i, j, current, max2,
-    tracedCells = [],
-    alignment1 = [],
-    alignment2 = [],
     startingPoints = [],
     results = [];
 
@@ -26,15 +23,12 @@ function traceback(mode,matrix,sequence1,sequence2){
 
     // Pick element to start from
     if (mode === "global"){
-        i = m-1;
-        j = n-1;
-        current = matrix[i][j];
-        tracedCells.push({i: i,j: j});
-
         startingPoints.push({
-            i: i,
-            j: j,
-            tracedCells: tracedCells
+            i: m-1,
+            j: n-1,
+            tracedCells: [{i: m-1,j: n-1}],
+            alignment1: [],
+            alignment2: []
         });
     } else if (mode === "semi"){
         // find max element from last row or last column
@@ -76,34 +70,61 @@ function traceback(mode,matrix,sequence1,sequence2){
                 max2.pos.push({i:m-1,j:j});
             }
         }
-        // Here we will loop through all max values, creating our possibly many starting points
-        // for (var k = 0; k < max2.pos.length; k++) {
-        //     if (max2.pos.i < m-1){
+        // Here we will loop through all max values, creating our possibly many starting points for semi global mode
+        for (var k = 0; k < max2.pos.length; k++) {
+            // Add gaps to end if needed
+            var tracedCellsTEMP = [],
+            alignment1TEMP = [],
+            alignment2TEMP = [];
 
-        //     } else if (max2.pos.j < n-1){
+            if (max2.pos[k].i < m-1){
+                console.log('test');
+                for (var w = m-1; w > max2.pos[k].i; w--) {
+                    tracedCellsTEMP.push({i:w,j:n-1});
+                    alignment1TEMP.unshift(sequence1[w-1]);
+                    alignment2TEMP.unshift('-');
+                }
+            } else if (max2.pos[k].j < n-1){
+                console.log('test2');
+                for (var w = n - 1; w > max2.pos[k].j; w--) {
+                    tracedCellsTEMP.push({i:m-1,j:w});
+                    alignment1TEMP.unshift('-');
+                    alignment2TEMP.unshift(sequence2[w-1]);
+                }
+            }
 
+            // push starting point cell to 
+            tracedCellsTEMP.push({i:max2.pos[k].i,j:max2.pos[k].j});
+
+            // add startingPoint to startingPoints array
+            startingPoints.push({
+                i: max2.pos[k].i,
+                j: max2.pos[k].j,
+                tracedCells: JSON.parse(JSON.stringify(tracedCellsTEMP)),
+                alignment1: JSON.parse(JSON.stringify(alignment1TEMP)),
+                alignment2: JSON.parse(JSON.stringify(alignment2TEMP))
+            });
+        }
+
+        // // Add gaps to end if needed
+        // if (max.i < m-1){
+        //     for (var k = m - 1; k > max.i; k--) {
+        //         tracedCells.push({i:k,j:n-1});
+        //         alignment1.unshift(sequence1[k-1]);
+        //         alignment2.unshift('-');
+        //     }
+        // } else if (max.j < n-1){
+        //     for (var k = n - 1; k > max.j; k--) {
+        //         tracedCells.push({i:m-1,j:k});
+        //         alignment1.unshift('-');
+        //         alignment2.unshift(sequence2[k-1]);
         //     }
         // }
-
-        // Add gaps to end if needed
-        if (max.i < m-1){
-            for (var k = m - 1; k > max.i; k--) {
-                tracedCells.push({i:k,j:n-1});
-                alignment1.unshift(sequence1[k-1]);
-                alignment2.unshift('-');
-            }
-        } else if (max.j < n-1){
-            for (var k = n - 1; k > max.j; k--) {
-                tracedCells.push({i:m-1,j:k});
-                alignment1.unshift('-');
-                alignment2.unshift(sequence2[k-1]);
-            }
-        }
-        // Set starting point cell (current) to the max value found and update our iterators i and j
-        current = matrix[max.i][max.j];
-        tracedCells.push({i: max.i,j: max.j});
-        i = max.i;
-        j = max.j;
+        // // Set starting point cell (current) to the max value found and update our iterators i and j
+        // current = matrix[max.i][max.j];
+        // tracedCells.push({i: max.i,j: max.j});
+        // i = max.i;
+        // j = max.j;
     } else {
         // Mode = local
         // find max element overall
@@ -132,15 +153,17 @@ function traceback(mode,matrix,sequence1,sequence2){
                 }
             }
         }
-        tracedCells.push({i: max2.pos[0].i,j: max2.pos[0].j});
-        i = max2.pos[0].i;
-        j = max2.pos[0].j;
+        // tracedCells.push({i: max2.pos[0].i,j: max2.pos[0].j});
+        // i = max2.pos[0].i;
+        // j = max2.pos[0].j;
 
         for (var k = 0; k < max2.pos.length; k++) {
             startingPoints.push({
                 i: max2.pos[k].i,
                 j: max2.pos[k].j,
-                tracedCells: [{i: max2.pos[k].i,j: max2.pos[k].j}]
+                tracedCells: [{i: max2.pos[k].i,j: max2.pos[k].j}],
+                alignment1: [],
+                alignment2: []
             });
         }
     }
@@ -152,7 +175,7 @@ function traceback(mode,matrix,sequence1,sequence2){
 
     for (var k = 0; k < startingPoints.length; k++) {
         console.log('startingPoint[' + k +  ']');
-        traverse(JSON.parse(JSON.stringify(matrix)), sequence1, sequence2, startingPoints[k].i, startingPoints[k].j, JSON.parse(JSON.stringify(startingPoints[k].tracedCells)), JSON.parse(JSON.stringify(alignment1)), JSON.parse(JSON.stringify(alignment2)), results);
+        traverse(JSON.parse(JSON.stringify(matrix)), sequence1, sequence2, startingPoints[k].i, startingPoints[k].j, JSON.parse(JSON.stringify(startingPoints[k].tracedCells)), JSON.parse(JSON.stringify(startingPoints[k].alignment1)), JSON.parse(JSON.stringify(startingPoints[k].alignment2)), results);
     };
 
     return results;
