@@ -251,6 +251,14 @@ function printTraceback (traceback,matrixTable,alignmentContainer) {
         matchMismatch.pop();
 
         // display alignment
-        alignmentContainer.append( traceback[i].alignment[0].join('') + '<br>' + matchMismatch.join('') + '<br>' + traceback[i].alignment[1].join('') + '<br><br><br>');
+        alignmentContainer.append( '<div><label class="alignmentSelectorLabel">s1:<br><input type="radio" name="alignmentSelectorRadio" class ="alignmentSelectorRadio"><br>s2:</label><div class="alignment">' + traceback[i].alignment[0].join('') + '<br>' + matchMismatch.join('') + '<br>' + traceback[i].alignment[1].join('') + '</div></div>');
     }
+    // select first alignment to display traceback on matrix
+    $('.alignmentSelectorRadio').eq(0).prop('checked', 'checked');
+    matrixTable.find('.traced0').addClass('tracebackActive');
+    // watch for changes on which alignment to display traceback info on matrix
+    alignmentContainer.find('.alignmentSelectorRadio').change(function(event) {
+        $('.dynamicProgrammingMatrixCell').removeClass('tracebackActive');
+        matrixTable.find(('.traced' + alignmentContainer.find('.alignmentSelectorRadio').index(this))).addClass('tracebackActive');
+    });
 }

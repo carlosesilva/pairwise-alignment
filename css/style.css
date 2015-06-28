@@ -33,9 +33,6 @@ table {
 body {
   color: #333333; }
 
-input {
-  text-transform: uppercase; }
-
 .dynamicProgrammingMatrixWrapper {
   margin: 0 auto; }
   .dynamicProgrammingMatrixWrapper td {
@@ -59,11 +56,7 @@ input {
     background-color: green; }
   .dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrixCell.wrong {
     background-color: red; }
-  .dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrixCell.traced2 {
-    background-color: #e5e5ff; }
-  .dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrixCell.traced1 {
-    background-color: #ccccff; }
-  .dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrixCell.traced0 {
+  .dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrixCell.tracebackActive {
     background-color: blue; }
   .dynamicProgrammingMatrixWrapper .tracebackSelect {
     position: absolute;
@@ -109,6 +102,9 @@ h2 {
   margin: 30px 0;
   text-align: center; }
 
+input {
+  text-transform: uppercase; }
+
 .left {
   width: 49%;
   float: left; }
@@ -126,6 +122,19 @@ h2 {
   font-size: 20px;
   letter-spacing: 5px;
   line-height: 1em; }
+  .alignmentContainer > div {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center; }
+  .alignmentContainer .alignmentSelectorLabel {
+    text-align: left; }
+  .alignmentContainer .alignment {
+    text-align: left; }
 
 .tracebackSelect {
   position: absolute;
