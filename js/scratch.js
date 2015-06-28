@@ -78,8 +78,9 @@ function evaluate (argument) {
 
 
 function process () {
-
+    console.log('---------------\nBegin process()\n---------------');
     // set global variables
+    // 
     sequence1 = $("#sequence1").val();
     sequence2 = $("#sequence2").val();
     matchScore = parseInt($("#matchScore").val(),10);
@@ -150,6 +151,7 @@ function process () {
     
     /*-----  End of TESTING  ------*/
 
+    console.log('---------------\nEND process()\n---------------\n\n\n\n');
 } // Closes process()
 
 
