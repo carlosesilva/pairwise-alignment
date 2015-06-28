@@ -33,12 +33,12 @@ function traceback(mode,matrix,sequence1,sequence2){
     } else if (mode === "semi"){
         // find all max elements from last row or last column
         max = {
-            pos: [],
+            pos: [{i:m-1,j:n-1}],
             score: matrix[m-1][n-1].score
         };
 
-        // loop through last column
-        for (var i = 0; i < m; i++) {
+        // loop through last column minus the very last element
+        for (var i = 0; i < m-1; i++) {
             if (max.score < matrix[i][n-1].score){
                 max.pos = [{i:i,j:n-1}];
                 max.score = matrix[i][n-1].score;
@@ -46,8 +46,8 @@ function traceback(mode,matrix,sequence1,sequence2){
                 max.pos.push({i:i,j:n-1});
             }
         }
-        // loop through last row
-        for (var j = 0; j < n; j++) {
+        // loop through last row minus the very last element
+        for (var j = 0; j < n-1; j++) {
             if (max.score < matrix[m-1][j].score){
                 max.pos = [{i:m-1,j:j}];
                 max.score = matrix[m-1][j].score;
@@ -120,7 +120,7 @@ function traceback(mode,matrix,sequence1,sequence2){
     console.log('before calling traverse (inside traceback())', 't=0.000');
     start = new Date().getTime();
 
-
+    console.log(startingPoints);
     for (var k = 0; k < startingPoints.length; k++) {
         console.log('startingPoint[' + k +  ']');
         traverse(JSON.parse(JSON.stringify(matrix)), sequence1, sequence2, startingPoints[k].i, startingPoints[k].j, JSON.parse(JSON.stringify(startingPoints[k].tracedCells)), JSON.parse(JSON.stringify(startingPoints[k].alignment1)), JSON.parse(JSON.stringify(startingPoints[k].alignment2)), results);
