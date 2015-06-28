@@ -117,9 +117,7 @@ function traceback(mode,matrix,sequence1,sequence2){
             });
         }
     }
-    console.log(max);
-    console.log(startingPoints);
-    console.log('before calling traverse (inside traceback())', 't=0');
+    console.log('before calling traverse (inside traceback())', 't=0.000');
     start = new Date().getTime();
 
 
@@ -138,7 +136,14 @@ function traverse (matrix, sequence1, sequence2, i, j, tracedCells, alignment1, 
     var now = new Date().getTime();
     var thisRecursion = recursionCounter;
     recursionCounter++;
-    console.log('Begin: traverse('+ (thisRecursion) +') start', 't=' + ( now - start) );
+    if (recursionCounter === 10){
+        var r = confirm("There are more than 10 possible tracebacks, continuing might make browser slow or irresponsive. Hit cancel to stop, or ok to continue");
+        if (r === false){
+            console.log('Too many possible paths, error will be thrown to stop script');
+            throw '\'Too many paths, abort script\'';
+        }
+    }
+    console.log('Begin: traverse('+ (thisRecursion) +') start', 't=' + ((now - start)/1000) );
 
 
     // set starting point to matrix position i,j
@@ -210,7 +215,7 @@ function traverse (matrix, sequence1, sequence2, i, j, tracedCells, alignment1, 
     });
 
     var now = new Date().getTime();
-    console.log('End: traverse('+ (thisRecursion) +') start', 't=' + ( now - start) );
+    console.log('End: traverse('+ (thisRecursion) +') start', 't=' + ((now - start)/1000) );
     return results;
 
 }
