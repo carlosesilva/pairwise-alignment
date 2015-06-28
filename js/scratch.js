@@ -7,7 +7,8 @@ gapPenalty,
 mode,
 instantFeedback,
 correctMatrix,
-correctTraceback; 
+correctTraceback,
+recursionCounter; 
 
 $(document).ready(function(){
 
@@ -93,6 +94,9 @@ function process () {
     // calculate correct matrix array
     correctMatrix = computeMatrix(mode,sequence1,sequence2,matchScore,mismatchScore,gapPenalty);
 
+
+    // reset recursionCounter
+    recursionCounter = 0;
     // calculate traceback
     correctTraceback = traceback(mode, correctMatrix, sequence1, sequence2);
 

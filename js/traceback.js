@@ -130,7 +130,6 @@ function traceback(mode,matrix,sequence1,sequence2){
     
     
 }
-recursionCounter = 0;
 function traverse (matrix, sequence1, sequence2, i, j, tracedCells, alignment1, alignment2, results) {
     // set some testing info
     var now = new Date().getTime();
