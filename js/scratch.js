@@ -8,7 +8,8 @@ mode,
 instantFeedback,
 correctMatrix,
 correctTraceback,
-recursionCounter; 
+currentTracebackSelect,
+recursionCounter;
 
 $(document).ready(function(){
 
@@ -58,6 +59,60 @@ $(document).ready(function(){
         }
     });
 
+
+    $(document).on( 'click', '.tracebackSelect2', function(event) {
+        if ($(this).hasClass('tracebackOpen')){
+            // traceback is open for this cell
+            $(this).removeClass('tracebackOpen');
+            $('#tracebackSelectOptions').hide();
+        } else{
+            // traceback is closed for this cell (remember that it may be open for another cell)
+            
+            // remove tracebackOpen class from all cells in case there is another cell currently open other than $(this)
+            $('.tracebackSelect2').removeClass('tracebackOpen');
+
+            // add tracebackOpen class to $(this)
+            $(this).addClass('tracebackOpen');
+
+            // update global variable currentTracebackSelect to this object
+            currentTracebackSelect = $(this);
+
+            // update tracebackSelectOptions to work with $(this) cell and display it
+            // get traceback info from $(this) cell
+            var thisTraceback = JSON.parse($(this).next().attr('traceback'));
+            $('#tracebackSelectOptions').css({
+                top: $(this).offset().top + $(this).height(),
+                left: $(this).offset().left + $(this).width()
+            }).find('.tracebackCheckbox').each(function(index, el) {
+                if (thisTraceback[index]){
+                    $(this).prop('checked', true);
+                } else {
+                    $(this).prop('checked', false);
+                }
+            });
+            $('#tracebackSelectOptions').show().focus();
+
+        }
+    });
+    
+    $('.tracebackCheckbox').change(function(event) {
+        // console.log(event);
+        var currentTracebackInfo = JSON.parse(currentTracebackSelect.next().attr('traceback'));
+        // console.log($(this).index());
+        currentTracebackInfo[$(this).index()] = +(this.checked);
+        // console.log(currentTracebackInfo);
+        currentTracebackSelect.next().attr('traceback', JSON.stringify(currentTracebackInfo));
+        currentTracebackSelect.html(parseInt(currentTracebackInfo.join(''), 2));
+
+        if (instantFeedback){
+            displayFeedback($('#inputTableContainer .dynamicProgrammingMatrix'), compareMatrices(correctMatrix, readMatrix($('#inputTableContainer .dynamicProgrammingMatrix'))));
+        }
+
+    });
+    // $('#tracebackSelectOptions').focusout(function(event) {
+    //     currentTracebackSelect.removeClass('tracebackOpen');
+    //     $(this).hide();
+    // });
 
     
     /*-----  End of UI/UX  ------*/
@@ -117,9 +172,6 @@ function process () {
         $('#inputTableContainer .dynamicProgrammingMatrixCell').on('change', function(event) {
             // validate input again in case .keyup() failed e.g. value was pasted in, dragged in
             $(this).val(filterInteger($(this).val()));
-            displayFeedback($('#inputTableContainer .dynamicProgrammingMatrix'), compareMatrices(correctMatrix, readMatrix($('#inputTableContainer .dynamicProgrammingMatrix'))));
-        });
-        $('#inputTableContainer .tracebackSelect').on('change', function(event) {
             displayFeedback($('#inputTableContainer .dynamicProgrammingMatrix'), compareMatrices(correctMatrix, readMatrix($('#inputTableContainer .dynamicProgrammingMatrix'))));
         });
     }else{

@@ -59,6 +59,35 @@ $matrix-cell-border : 1px solid $color-theme-2 !default;
             background-color: darken(red, 7%);
         }
     }
+    .tracebackSelect2{
+        position: absolute;
+        top: 1px;
+        left: 1px;
+        width: 15px;
+        height: 15px;
+        background-color: #aaa;
+        cursor: pointer;
+
+        &.correct{
+            background-color: darken(green, 5%);
+        }
+        &.wrong{
+            background-color: darken(red, 7%);
+        }
+
+        > div{
+            display:none;
+        }
+    }
+
+    .tracebackSelect2Options{
+        position: absolute;
+        top: 11px;
+        left: 11px;
+        width: 100px;
+        height: 100px;
+        background-color: orange;
+    }
 
 
 }
