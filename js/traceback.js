@@ -123,14 +123,14 @@ function traceback(mode,matrix,sequence1,sequence2){
     console.log(startingPoints);
     for (var k = 0; k < startingPoints.length; k++) {
         console.log('startingPoint[' + k +  ']');
-        traverse(JSON.parse(JSON.stringify(matrix)), sequence1, sequence2, startingPoints[k].i, startingPoints[k].j, JSON.parse(JSON.stringify(startingPoints[k].tracedCells)), JSON.parse(JSON.stringify(startingPoints[k].alignment1)), JSON.parse(JSON.stringify(startingPoints[k].alignment2)), results);
+        traverse(mode, JSON.parse(JSON.stringify(matrix)), sequence1, sequence2, startingPoints[k].i, startingPoints[k].j, JSON.parse(JSON.stringify(startingPoints[k].tracedCells)), JSON.parse(JSON.stringify(startingPoints[k].alignment1)), JSON.parse(JSON.stringify(startingPoints[k].alignment2)), results);
     };
 
     return results;
     
     
 }
-function traverse (matrix, sequence1, sequence2, i, j, tracedCells, alignment1, alignment2, results) {
+function traverse (mode, matrix, sequence1, sequence2, i, j, tracedCells, alignment1, alignment2, results) {
     // set some testing info
     var now = new Date().getTime();
     var thisRecursion = recursionCounter;
@@ -150,6 +150,10 @@ function traverse (matrix, sequence1, sequence2, i, j, tracedCells, alignment1, 
 
 
     while( !current.traceback[0] ){
+
+
+
+
         if (current.traceback[3]){
             // [3] represents diagonal path next is S[i-1][j-1]
             
@@ -159,7 +163,7 @@ function traverse (matrix, sequence1, sequence2, i, j, tracedCells, alignment1, 
             // if there are other paths, call traverse again;
             // traverse stopping condition( when current.traceback == [1,0,0,0]) will always be met at some point since S(0,0).traceback always equals [1,0,0,0]
             if ( current.traceback.slice(1).join('') !== '000' ){
-                traverse(JSON.parse(JSON.stringify(matrix)), sequence1, sequence2, i, j, JSON.parse(JSON.stringify(tracedCells)), JSON.parse(JSON.stringify(alignment1)), JSON.parse(JSON.stringify(alignment2)), results);
+                traverse(mode, JSON.parse(JSON.stringify(matrix)), sequence1, sequence2, i, j, JSON.parse(JSON.stringify(tracedCells)), JSON.parse(JSON.stringify(alignment1)), JSON.parse(JSON.stringify(alignment2)), results);
             }
 
             // update i and j and current
@@ -178,7 +182,7 @@ function traverse (matrix, sequence1, sequence2, i, j, tracedCells, alignment1, 
             // if there are other paths, call traverse again;
             // traverse stopping condition( when current.traceback == [1,0,0,0]) will always be met at some point since S(0,0).traceback always equals [1,0,0,0]
             if ( current.traceback.slice(1).join('') !== '000' ){
-                traverse(JSON.parse(JSON.stringify(matrix)), sequence1, sequence2, i, j, JSON.parse(JSON.stringify(tracedCells)), JSON.parse(JSON.stringify(alignment1)), JSON.parse(JSON.stringify(alignment2)), results);
+                traverse(mode, JSON.parse(JSON.stringify(matrix)), sequence1, sequence2, i, j, JSON.parse(JSON.stringify(tracedCells)), JSON.parse(JSON.stringify(alignment1)), JSON.parse(JSON.stringify(alignment2)), results);
             }
 
             // update i and current
@@ -196,7 +200,7 @@ function traverse (matrix, sequence1, sequence2, i, j, tracedCells, alignment1, 
             // if there are other paths, call traverse again;
             // traverse stopping condition( when current.traceback == [1,0,0,0]) will always be met at some point since S(0,0).traceback always equals [1,0,0,0]
             if ( current.traceback.slice(1).join('') !== '000' ){
-                traverse(JSON.parse(JSON.stringify(matrix)), sequence1, sequence2, i, j, JSON.parse(JSON.stringify(tracedCells)), JSON.parse(JSON.stringify(alignment1)), JSON.parse(JSON.stringify(alignment2)), results);
+                traverse(mode, JSON.parse(JSON.stringify(matrix)), sequence1, sequence2, i, j, JSON.parse(JSON.stringify(tracedCells)), JSON.parse(JSON.stringify(alignment1)), JSON.parse(JSON.stringify(alignment2)), results);
             }
             
             // update j and current
@@ -205,6 +209,22 @@ function traverse (matrix, sequence1, sequence2, i, j, tracedCells, alignment1, 
             tracedCells.push({i: i,j: j});
             alignment1.unshift('-');
             alignment2.unshift(sequence2[j]);
+        }
+
+        if (mode==="local" && current.score === 0){
+            current.traceback[0] = 0;
+
+            console.log('traceback', current.traceback);
+            current.score = -1;
+            console.log('score', current.score);
+
+            // if there are other paths, call traverse again;
+            // traverse stopping condition( when current.traceback == [1,0,0,0]) will always be met at some point since S(0,0).traceback always equals [1,0,0,0]
+            if ( current.traceback.slice(1).join('') !== '000' ){
+                traverse(mode, JSON.parse(JSON.stringify(matrix)), sequence1, sequence2, i, j, JSON.parse(JSON.stringify(tracedCells)), JSON.parse(JSON.stringify(alignment1)), JSON.parse(JSON.stringify(alignment2)), results);
+            }
+
+            break;
         }
     }
 
