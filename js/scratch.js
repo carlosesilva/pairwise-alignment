@@ -178,6 +178,18 @@ function process () {
         $('#inputTableContainer .dynamicProgrammingMatrixCell, #inputTableContainer .tracebackSelect').off('focusout change');
     }
 
+    // Guided Mode
+    $('#inputTableContainer .dynamicProgrammingMatrixContainer td').focusin(function(event) {
+        $(this).closest('table').find('td').addClass('irrelevant');
+        var top = $(this).parent().prev().find('td').eq($(this).index());
+        var diag = top.prev();
+        var left = $(this).prev();
+        $(this).add(left).add(top).add(diag).removeClass('irrelevant');
+    });
+
+    $('#inputTableContainer .dynamicProgrammingMatrixContainer').focusout(function(event) {
+        $(this).find('td').removeClass('irrelevant');
+    });
 
 
 

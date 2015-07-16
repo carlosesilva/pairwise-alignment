@@ -6,6 +6,10 @@ $matrix-cell-border : 1px solid $color-theme-2 !default;
 
     td{
         position: relative;
+
+        &.irrelevant{
+            opacity:0.5;
+        }
     }
     input[type=text], .dynamicProgrammingMatrixCell{
         width: $matrix-cell-width;
@@ -39,6 +43,7 @@ $matrix-cell-border : 1px solid $color-theme-2 !default;
     .dynamicProgrammingMatrixCell.tracebackActive{
         background-color: blue;
     }
+
 
     .tracebackSelect{
         position: absolute;
