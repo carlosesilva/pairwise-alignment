@@ -59,7 +59,7 @@ $(document).ready(function(){
         }
     });
 
-
+    // traceback input select
     $(document).on( 'click', '.tracebackSelect2', function(event) {
         if ($(this).hasClass('tracebackOpen')){
             // traceback is open for this cell
@@ -90,7 +90,7 @@ $(document).ready(function(){
                     $(this).prop('checked', false);
                 }
             });
-            $('#tracebackSelectOptions').show().focus();
+            $('#tracebackSelectOptions').show();
 
         }
     });
