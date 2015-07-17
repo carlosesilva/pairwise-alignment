@@ -6,6 +6,7 @@ mismatchScore,
 gapPenalty,
 mode,
 instantFeedback,
+guidedMode,
 correctMatrix,
 correctTraceback,
 currentTracebackSelect,
@@ -17,7 +18,7 @@ $(document).ready(function(){
 
     process();
     
-    $('#sequence1, #sequence2, #matchScore, #mismatchScore, #gapPenalty, #mode, #instantFeedback, #showTestingInfo').change(function(event) {
+    $('#sequence1, #sequence2, #matchScore, #mismatchScore, #gapPenalty, #mode, #instantFeedback, #showTestingInfo, #guidedMode').change(function(event) {
         process();
     });
 
@@ -151,6 +152,7 @@ function process () {
     gapPenalty = parseInt($("#gapPenalty").val(),10);
     mode = $("#mode").val();
     instantFeedback = $("#instantFeedback")[0].checked;
+    guidedMode = $("#guidedMode")[0].checked;
 
 
     // calculate correct matrix array
@@ -179,19 +181,25 @@ function process () {
     }
 
     // Guided Mode
-    $('#inputTableContainer .dynamicProgrammingMatrixContainer td').focusin(function(event) {
-        $(this).closest('table').find('td').addClass('irrelevant');
-        var top = $(this).parent().prev().find('td').eq($(this).index());
-        var diag = top.prev();
-        var left = $(this).prev();
-        $(this).add(left).add(top).add(diag).removeClass('irrelevant');
-    });
+    if (guidedMode){
+        console.log('test');
+        $('#inputTableContainer .dynamicProgrammingMatrixContainer td').focusin(function(event) {
+            $(this).closest('table').find('td').addClass('irrelevant');
+            var top = $(this).parent().prev().find('td').eq($(this).index());
+            var diag = top.prev();
+            var left = $(this).prev();
+            $(this).add(left).add(top).add(diag).removeClass('irrelevant');
+        });
+        // Reset relevant/irrelevant cells when dynamicProgrammingMatrixContainer loses focus
+        $('#inputTableContainer .dynamicProgrammingMatrixContainer').focusout(function(event) {
+            $(this).find('td').removeClass('irrelevant');
+        });
 
-    $('#inputTableContainer .dynamicProgrammingMatrixContainer').focusout(function(event) {
-        $(this).find('td').removeClass('irrelevant');
-    });
-
-
+        // $('#inputTableContainer .dynamicProgrammingMatrixCell, #inputTableContainer .tracebackSelect2').prop('disabled', true);
+    }else{
+        console.log('test2');
+        $('#inputTableContainer .dynamicProgrammingMatrixContainer td').off('focusin');
+    }
 
 
     /*===============================

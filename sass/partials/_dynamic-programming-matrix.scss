@@ -8,7 +8,7 @@ $matrix-cell-border : 1px solid $color-theme-2 !default;
         position: relative;
 
         &.irrelevant{
-            opacity:0.5;
+            opacity:0.35;
         }
     }
     input[type=text], .dynamicProgrammingMatrixCell{
@@ -42,6 +42,9 @@ $matrix-cell-border : 1px solid $color-theme-2 !default;
     }
     .dynamicProgrammingMatrixCell.tracebackActive{
         background-color: blue;
+    }
+    .dynamicProgrammingMatrixCell:disabled{
+        background-color: $gray-light;
     }
 
 
