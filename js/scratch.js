@@ -61,7 +61,7 @@ $(document).ready(function(){
     });
 
     // traceback input select
-    $(document).on( 'click', '.tracebackSelect2', function(event) {
+    $(document).on( 'click', '.tracebackSelect', function(event) {
         if ($(this).hasClass('tracebackOpen')){
             // traceback is open for this cell
             $(this).removeClass('tracebackOpen');
@@ -70,7 +70,7 @@ $(document).ready(function(){
             // traceback is closed for this cell (remember that it may be open for another cell)
             
             // remove tracebackOpen class from all cells in case there is another cell currently open other than $(this)
-            $('.tracebackSelect2').removeClass('tracebackOpen');
+            $('.tracebackSelect').removeClass('tracebackOpen');
 
             // add tracebackOpen class to $(this)
             $(this).addClass('tracebackOpen');
@@ -182,7 +182,19 @@ function process () {
 
     // Guided Mode
     if (guidedMode){
-        console.log('test');
+        console.log('Entering guidedMode');
+        console.log('Step 1');
+        console.log('Fill in first row');
+
+        var $cells = $('#inputTableContainer .dynamicProgrammingMatrix').find('td');
+        var $row1 = $('#inputTableContainer .dynamicProgrammingMatrix').find('tr').eq(0).find('td');
+        var $col1 = $('#inputTableContainer .dynamicProgrammingMatrix').find('tr').find('td:eq(0)');
+        $cells.not($row1).find('input').prop('disabled', true);
+
+
+
+
+        // Add relevant/irrelevant visual guide
         $('#inputTableContainer .dynamicProgrammingMatrixContainer td').focusin(function(event) {
             $(this).closest('table').find('td').addClass('irrelevant');
             var top = $(this).parent().prev().find('td').eq($(this).index());
@@ -195,9 +207,7 @@ function process () {
             $(this).find('td').removeClass('irrelevant');
         });
 
-        // $('#inputTableContainer .dynamicProgrammingMatrixCell, #inputTableContainer .tracebackSelect2').prop('disabled', true);
     }else{
-        console.log('test2');
         $('#inputTableContainer .dynamicProgrammingMatrixContainer td').off('focusin');
     }
 
