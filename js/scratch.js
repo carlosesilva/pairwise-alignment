@@ -65,7 +65,7 @@ $(document).ready(function(){
         if ($(this).hasClass('tracebackOpen')){
             // traceback is open for this cell
             $(this).removeClass('tracebackOpen');
-            $('#tracebackSelectOptions').hide();
+            $('#tracebackSelectOptions, #tracebackSelectOptionsOverlay').hide();
         } else{
             // traceback is closed for this cell (remember that it may be open for another cell)
             
@@ -91,8 +91,7 @@ $(document).ready(function(){
                     $(this).prop('checked', false);
                 }
             });
-            $('#tracebackSelectOptions').show();
-
+            $('#tracebackSelectOptions, #tracebackSelectOptionsOverlay').show();
         }
     });
     
@@ -110,10 +109,11 @@ $(document).ready(function(){
         }
 
     });
-    // $('#tracebackSelectOptions').focusout(function(event) {
-    //     currentTracebackSelect.removeClass('tracebackOpen');
-    //     $(this).hide();
-    // });
+
+    $('#tracebackSelectOptionsOverlay').click(function(event) {
+        currentTracebackSelect.removeClass('tracebackOpen');
+        $(this).add('#tracebackSelectOptions').hide();
+    });
 
     
     /*-----  End of UI/UX  ------*/
@@ -169,7 +169,10 @@ function process () {
     $('#inputTableContainer').html(buildMatrixHTML(sequence1, sequence2));
 
     
-    // Instant feedback
+
+    /*========================================
+    =            INSTANT FEEDBACK            =
+    ========================================*/
     if (instantFeedback){
         $('#inputTableContainer .dynamicProgrammingMatrixCell').on('change', function(event) {
             // validate input again in case .keyup() failed e.g. value was pasted in, dragged in
@@ -179,37 +182,38 @@ function process () {
     }else{
         $('#inputTableContainer .dynamicProgrammingMatrixCell, #inputTableContainer .tracebackSelect').off('focusout change');
     }
+    /*-----  End of INSTANT FEEDBACK  ------*/
+    
 
-    // Guided Mode
+
+
+    /*===================================
+    =            GUIDED MODE            =
+    ===================================*/
     if (guidedMode){
         console.log('Entering guidedMode');
-        console.log('Step 1');
-        console.log('Fill in first row');
 
-        var $cells = $('#inputTableContainer .dynamicProgrammingMatrix').find('td');
-        var $row1 = $('#inputTableContainer .dynamicProgrammingMatrix').find('tr').eq(0).find('td');
-        var $col1 = $('#inputTableContainer .dynamicProgrammingMatrix').find('tr').find('td:eq(0)');
-        $cells.not($row1).find('input').prop('disabled', true);
-
-
+        step1($('#inputTableContainer .dynamicProgrammingMatrix'));
 
 
         // Add relevant/irrelevant visual guide
-        $('#inputTableContainer .dynamicProgrammingMatrixContainer td').focusin(function(event) {
+        $('#inputTableContainer .dynamicProgrammingMatrixContainer td').on('focusin.relevant.guidedMode', function(event) {
             $(this).closest('table').find('td').addClass('irrelevant');
             var top = $(this).parent().prev().find('td').eq($(this).index());
             var diag = top.prev();
             var left = $(this).prev();
             $(this).add(left).add(top).add(diag).removeClass('irrelevant');
-        });
+        }).addClass('namespace_guidedMode');
         // Reset relevant/irrelevant cells when dynamicProgrammingMatrixContainer loses focus
-        $('#inputTableContainer .dynamicProgrammingMatrixContainer').focusout(function(event) {
+        $('#inputTableContainer .dynamicProgrammingMatrixContainer').on('focusout.relevant.guidedMode', function(event) {
             $(this).find('td').removeClass('irrelevant');
-        });
+        }).addClass('namespace_guidedMode');
 
     }else{
-        $('#inputTableContainer .dynamicProgrammingMatrixContainer td').off('focusin');
+        $('.namespace_guidedMode').off('.guidedMode').removeClass('guidedMode');
     }
+    /*-----  End of GUIDED MODE  ------*/
+
 
 
     /*===============================
@@ -263,13 +267,97 @@ function compareAlignment (input1,input2,traceback) {
 
 
 
+function step1 (matrix) {
+    var $cells = matrix.find('td');
+    var $row1 = matrix.find('tr').eq(0).find('td');
+    var $col1 = matrix.find('tr').find('td:eq(0)');
+    var $mainCells = $cells.not($row1).not($col1);
+
+    // watch for completion of step 1
+    if (checkCompletion($row1.children())) {
+        step2(matrix);
+    }else{
+        console.log('Step 1');
+        console.log('Fill in first row');
+        $cells.removeClass('guided');
+        $row1.addClass('guided');
+        $cells.not($row1).find('input').prop('disabled', true);
 
 
+        $row1.add('.tracebackCheckbox').on('change.step1.guidedMode', function(event) {
+            console.log('test step1');
+            if (checkCompletion($row1.children())){
+                // stop step1 event
+                // $row1.off('.step1');
+
+                step2(matrix);
+            }
+        }).addClass('namespace_guidedMode');
+    }
+}
 
 
+function step2 (matrix) {
+    var $cells = matrix.find('td');
+    var $row1 = matrix.find('tr').eq(0).find('td');
+    var $col1 = matrix.find('tr').find('td:eq(0)');
+    var $mainCells = $cells.not($row1).not($col1);
+
+    // watch for completion of step 3
+    if (checkCompletion($col1.children())) {
+        step3(matrix);
+    }else{
+        console.log('Entering step2');
+        console.log('Complete first column');
+        
+        $cells.find('input').prop('disabled', false);
+        $col1.eq(1).find('.dynamicProgrammingMatrixCell').focus();
+        $cells.removeClass('guided');
+        $col1.addClass('guided');
+        $cells.not($col1).find('input').prop('disabled', true);
+
+        $col1.add('.tracebackCheckbox').on('change.step2.guidedMode', function(event) {
+            console.log('test step2');
+            if (checkCompletion($col1.children())){
+                // stop step1 event
+                // $row1.off('.step1');
+
+                step3(matrix);
+            }
+        }).addClass('namespace_guidedMode');
+    }
+}
 
 
+function step3 (matrix) {
+    var $cells = matrix.find('td');
+    var $row1 = matrix.find('tr').eq(0).find('td');
+    var $col1 = matrix.find('tr').find('td:eq(0)');
+    var $mainCells = $cells.not($row1).not($col1);
+
+    // watch for completion of step 1
+    if (checkCompletion($mainCells.children())) {
+        // step4(matrix);
+    }else{
+        console.log('Entering step3');
+        console.log('Complete rest of matrix');
+        
+        $cells.find('input').prop('disabled', false);
+        $mainCells.eq(0).find('.dynamicProgrammingMatrixCell').focus();
+        $cells.removeClass('guided');
+        $mainCells.addClass('guided');
+        $cells.not($mainCells).find('input').prop('disabled', true);
+    }
+}
 
 
+function checkCompletion (elements) {
+    var complete = true;
+    elements.filter('input').each(function(index, el) {
+        if(!$(el).hasClass('correct'))
+            complete = false;
+    });
+    return complete;
+}
 
 /*-----  End of Functions  ------*/
