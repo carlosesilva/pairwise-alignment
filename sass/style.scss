@@ -18,20 +18,6 @@ input{
 }
 
 
-.left{
-    width: 49%;
-    float: left;
-}
-.right{
-    width: 49%;
-    float: right;
-}
-
-
-#testing{
-    display: none;
-    border-left: 1px solid $color-theme-2;
-}
 
 .alignmentContainer{
     
@@ -83,6 +69,7 @@ $sidebarWidth: 300px;
     position: fixed;
     top:0;
     left:0;
+    z-index: 10;
     color: $gray-light;
     text-align: left;
 
@@ -100,7 +87,8 @@ $sidebarWidth: 300px;
     position: fixed;
     top: $topBarHeight;
     left:0;
-    
+    z-index: 10;
+
     color: $gray-lighter;
     font-family: sans-serif;
 
@@ -132,5 +120,21 @@ $sidebarWidth: 300px;
 #wrapper{
     float:left;
     width: calc(100vw - #{$sidebarWidth});
-    margin: $topBarHeight 0  0 $sidebarWidth
+    margin: $topBarHeight 0  0 $sidebarWidth;
+}
+
+#inputTableContainer{
+    margin: 20px 0 0 20px;
+}
+
+
+
+
+
+#testing{
+    @extend #wrapper;
+
+    display: none;
+    position: absolute;
+    background-color: orange;
 }
