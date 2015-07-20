@@ -6,27 +6,41 @@
 	<link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-	<div id="wrapper" class="left">
+
+	<div id="topBar">
 		<h1>Pairwise Alignment</h1>
-		<div id="options">
-			sequence1: <input type="text" name="" id="sequence1" value="GAT"/>
-			sequence2: <input type="text" name="" id="sequence2" value="GCA"/><br><br>
-			matchScore: <input type="text" name="" id="matchScore" value="1"/>
-			mismatchScore: <input type="text" name="" id="mismatchScore" value="-1"/>
-			gapPenalty: <input type="text" name="" id="gapPenalty" value="-1"/><br><br>
-			mode: 
+	</div>
+	
+	<div class="sidebar">
+
+		<h2 class="sidebarTabHeader"><a href="#">Help</a></h2>
+		<div id="help" class="sidebarTabContent">
+			<div id="chatBubble"></div>
+		</div>
+		
+		<h2 class="sidebarTabHeader"><a href="#">Settings</a></h2>
+		<div id="settings" class="sidebarTabContent">
+			sequence1:<br><input type="text" name="" id="sequence1" value="GAT"/><br>
+			sequence2:<br><input type="text" name="" id="sequence2" value="GCA"/><br>
+			matchScore:<br><input type="text" name="" id="matchScore" value="1"/><br>
+			mismatchScore:<br><input type="text" name="" id="mismatchScore" value="-1"/><br>
+			gapPenalty:<br><input type="text" name="" id="gapPenalty" value="-1"/><br>
+			mode:
 			<select name="" id="mode">
 				<option value="global" selected>global</option>
 				<option value="semi" >semi</option>
 				<option value="local" >local</option>
-			</select> &#124; 
-			instantFeedback: <input type="checkbox" name="" id="instantFeedback" checked/> &#124; 
-			showTestingInfo: <input type="checkbox" name="" id="showTestingInfo" checked/> &#124;
-			guidedMode: <input type="checkbox" name="" id="guidedMode" checked/>
+			</select><br>
+			instantFeedback: <input type="checkbox" name="" id="instantFeedback" checked/><br> 
+			showTestingInfo: <input type="checkbox" name="" id="showTestingInfo"/><br>
+			guidedMode: <input type="checkbox" name="" id="guidedMode" checked/><br>
 			<button id="process">Process</button>
+			<button id="iAmStuck">I am stuck</button>
 			<br><br><br>
 		</div>
-		
+	</div>
+
+	<div id="wrapper" class="left">
 		Input Matrix:
 		<div id="inputTableContainer" class=""></div>
 		<br><br>
@@ -50,6 +64,7 @@
 		<div id="correctAlignment" class="alignmentContainer"></div>
 	</div>
 
+	<div class="clear"></div>
     <div id="tracebackSelectOptions" tabindex="-1">
     	<input type="checkbox" class="tracebackCheckbox">
     	<input type="checkbox" class="tracebackCheckbox">

@@ -33,6 +33,9 @@ table {
 body {
   color: #333333; }
 
+.clear {
+  clear: both; }
+
 .dynamicProgrammingMatrixWrapper {
   margin: 0 auto; }
   .dynamicProgrammingMatrixWrapper td {
@@ -103,16 +106,6 @@ body {
 body {
   text-align: center; }
 
-h1 {
-  font-size: 3em;
-  margin: 30px 0;
-  text-align: center; }
-
-h2 {
-  font-size: 2em;
-  margin: 30px 0;
-  text-align: center; }
-
 input {
   text-transform: uppercase; }
 
@@ -158,3 +151,48 @@ input {
     background-color: red; }
   .alignmentInput.correct {
     background-color: green; }
+
+#topBar {
+  background-color: #222222;
+  overflow: auto;
+  width: 100vw;
+  height: 50px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  color: #777777;
+  text-align: left; }
+  #topBar h1 {
+    font-size: 2rem;
+    padding: 5px; }
+
+.sidebar {
+  float: left;
+  width: 300px;
+  height: calc(100vh - 50px);
+  background-color: #000;
+  position: fixed;
+  top: 50px;
+  left: 0;
+  color: #eeeeee;
+  font-family: sans-serif; }
+  .sidebar .sidebarTabHeader {
+    background-color: #222222;
+    font-size: 1.5rem;
+    padding: 10px;
+    text-align: left; }
+    .sidebar .sidebarTabHeader a {
+      color: #eeeeee; }
+      .sidebar .sidebarTabHeader a:hover {
+        color: #9b9b9b; }
+  .sidebar .sidebarTabContent {
+    display: none;
+    background-color: #333333;
+    padding: 20px 10px; }
+  .sidebar #help {
+    display: block; }
+
+#wrapper {
+  float: left;
+  width: calc(100vw - 300px);
+  margin: 50px 0 0 300px; }

@@ -10,6 +10,7 @@ guidedMode,
 correctMatrix,
 correctTraceback,
 currentTracebackSelect,
+currentStep,
 recursionCounter;
 
 $(document).ready(function(){
@@ -27,10 +28,19 @@ $(document).ready(function(){
         process();
     });
 
+    $('#iAmStuck').click(function(event) {
+        step1($('#inputTableContainer .dynamicProgrammingMatrix'));
+    });
+
 
     /*=============================
     =            UI/UX            =
     =============================*/
+
+    // sidebar
+    $('.sidebarTabHeader').click(function(event) {
+        $(this).siblings('div').slideUp(200).end().next().slideDown(200);
+    });
 
 
     // limit input to dynamicProgrammingMatrixCell to positive and negative integers only
@@ -276,9 +286,13 @@ function step1 (matrix) {
     // watch for completion of step 1
     if (checkCompletion($row1.children())) {
         step2(matrix);
+    }else if(currentStep === 1){
+        // person is asking for more help
+
     }else{
-        console.log('Step 1');
-        console.log('Fill in first row');
+        currentStep = 1;
+        talk('<p>Step 1</p>', true);
+        talk('<p>Fill in first row</p>');
         $cells.removeClass('guided');
         $row1.addClass('guided');
         $cells.not($row1).find('input').prop('disabled', true);
@@ -307,8 +321,9 @@ function step2 (matrix) {
     if (checkCompletion($col1.children())) {
         step3(matrix);
     }else{
-        console.log('Entering step2');
-        console.log('Complete first column');
+        currentStep = 2;
+        talk('<p>Entering step2</p>', true);
+        talk('<p>Complete first column</p>');
         
         $cells.find('input').prop('disabled', false);
         $col1.eq(1).find('.dynamicProgrammingMatrixCell').focus();
@@ -339,8 +354,9 @@ function step3 (matrix) {
     if (checkCompletion($mainCells.children())) {
         // step4(matrix);
     }else{
-        console.log('Entering step3');
-        console.log('Complete rest of matrix');
+        currentStep = 3;
+        talk('<p>Entering step3</p>', true);
+        talk('<p>Complete rest of matrix</p>');
         
         $cells.find('input').prop('disabled', false);
         $mainCells.eq(0).find('.dynamicProgrammingMatrixCell').focus();
@@ -358,6 +374,13 @@ function checkCompletion (elements) {
             complete = false;
     });
     return complete;
+}
+
+function talk (content, clear) {
+    if (clear === true){
+        $('#chatBubble').html('');
+    }
+    $('#chatBubble').append(content);
 }
 
 /*-----  End of Functions  ------*/
