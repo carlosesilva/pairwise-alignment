@@ -1,5 +1,5 @@
 $matrix-cell-width : 50px !default;
-$matrix-cell-border : 1px solid $color-theme-2 !default;
+$matrix-cell-border : 1px solid $color-theme-3 !default;
 
 .dynamicProgrammingMatrixWrapper {
     td{
@@ -25,7 +25,7 @@ $matrix-cell-border : 1px solid $color-theme-2 !default;
     >tbody > tr:nth-child(1) td, >tbody > tr > td:nth-child(1){
         input[type=text]{
             background-color: $gray-dark;
-            color: $color-theme-2; // not working on safari for some reason
+            color: $color-theme-3; // not working on safari for some reason
             font-weight: bold;
         }
     }
@@ -36,39 +36,54 @@ $matrix-cell-border : 1px solid $color-theme-2 !default;
         left: 0;
     }
     
+
+    .dynamicProgrammingMatrixCell:disabled{
+        background-color: $disabled;
+        opacity: .5;
+        color: #000;
+    }
     .dynamicProgrammingMatrixCell.correct{
-        background-color: green;
+        background-color: $correct;
+        color: grayscale(saturate($correct, 50%));
+    }
+    .dynamicProgrammingMatrixCell.correct:disabled{
+        background-color: mix($correct, $disabled);
+        color: #000;
     }
     .dynamicProgrammingMatrixCell.wrong{
-        background-color: red;
+        background-color: $wrong;
     }
+    .dynamicProgrammingMatrixCell.wrong:disabled{
+        background-color: mix($wrong, $disabled);
+        color: #000;
+    }
+    
+
+
+
+    // used on correct matrix
     .dynamicProgrammingMatrixCell.tracebackActive{
-        background-color: blue;
+        background-color: $correct;
     }
-    .dynamicProgrammingMatrixCell:disabled{
-        background-color: $gray-light;
-        opacity: .5;
-    }
+
 
     .tracebackSelect{
         position: absolute;
-        top: 1px;
-        left: 1px;
+        top: 2px;
+        left: 2px;
         width: $matrix-cell-width / 3.5;
         height: $matrix-cell-width / 3.5;
         background-color: #aaa;
         cursor: pointer;
         outline: none;
-
+        font-size: 0.7rem;
+        line-height: $matrix-cell-width / 3.5;
+        border: 1px solid rgba(#000, .5);
         &.correct{
-            background-color: darken(green, 5%);
+            background-color: darken($correct, 5%);
         }
         &.wrong{
-            background-color: darken(red, 7%);
-        }
-
-        > div{
-            display:none;
+            background-color: darken($wrong, 7%);
         }
     }
 
@@ -79,13 +94,15 @@ $matrix-cell-border : 1px solid $color-theme-2 !default;
 #tracebackSelectOptions{
     display: none;
     position: absolute;
-    top: 0;
-    left: 0;
     z-index: 99;
     
-    width: 100px;
-    height: 100px;
-    background-color: orange;
+    background-color: $color-theme-3;
+    border: 1px outset scale-color($color-theme-3, $lightness: -35%);
+    text-align: left;
+    padding: 10px;
+    p{
+
+    }
 }
 #tracebackSelectOptionsOverlay{
     display: none;

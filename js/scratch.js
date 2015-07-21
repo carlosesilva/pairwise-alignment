@@ -28,7 +28,7 @@ $(document).ready(function(){
         process();
     });
 
-    $('#iAmStuck').click(function(event) {
+    $('#stuck a').click(function(event) {
         step1($('#inputTableContainer .dynamicProgrammingMatrix'));
     });
 
@@ -39,7 +39,11 @@ $(document).ready(function(){
 
     // sidebar
     $('.sidebarTabHeader').click(function(event) {
-        $(this).siblings('div').slideUp(200).end().next().slideDown(200);
+        if(!$(this).hasClass('active')){
+
+            $(this).siblings('h2').filter('.active').removeClass('active').next('.sidebarTabContent').slideUp(200);
+            $(this).addClass('active').next('.sidebarTabContent').slideDown(200);
+        }
     });
 
 
@@ -93,7 +97,7 @@ $(document).ready(function(){
             var thisTraceback = JSON.parse($(this).next().attr('traceback'));
             $('#tracebackSelectOptions').css({
                 top: $(this).offset().top + $(this).height(),
-                left: $(this).offset().left + $(this).width()
+                left: $(this).offset().left - $('#tracebackSelectOptions').outerWidth()
             }).find('.tracebackCheckbox').each(function(index, el) {
                 if (thisTraceback[index]){
                     $(this).prop('checked', true);
@@ -109,7 +113,7 @@ $(document).ready(function(){
         // console.log(event);
         var currentTracebackInfo = JSON.parse(currentTracebackSelect.next().attr('traceback'));
         // console.log($(this).index());
-        currentTracebackInfo[$(this).index()] = +(this.checked);
+        currentTracebackInfo[$(this).parent().index()] = +(this.checked);
         // console.log(currentTracebackInfo);
         currentTracebackSelect.next().attr('traceback', JSON.stringify(currentTracebackInfo));
         currentTracebackSelect.html(parseInt(currentTracebackInfo.join(''), 2));
@@ -164,6 +168,12 @@ function process () {
     instantFeedback = $("#instantFeedback")[0].checked;
     guidedMode = $("#guidedMode")[0].checked;
 
+
+    // reset current step
+    currentStep = 0;
+
+    // reset chat bubble
+    talk('', true);
 
     // calculate correct matrix array
     correctMatrix = computeMatrix(mode,sequence1,sequence2,matchScore,mismatchScore,gapPenalty);
@@ -220,6 +230,7 @@ function process () {
         }).addClass('namespace_guidedMode');
 
     }else{
+        // release event handles added by guidedMode
         $('.namespace_guidedMode').off('.guidedMode').removeClass('guidedMode');
     }
     /*-----  End of GUIDED MODE  ------*/
@@ -288,7 +299,6 @@ function step1 (matrix) {
         step2(matrix);
     }else if(currentStep === 1){
         // person is asking for more help
-
     }else{
         currentStep = 1;
         talk('<p>Step 1</p>', true);

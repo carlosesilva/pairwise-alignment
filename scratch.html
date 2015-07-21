@@ -13,15 +13,18 @@
 	
 	<div class="sidebar">
 
-		<h2 class="sidebarTabHeader"><a href="#">Help</a></h2>
+		<h2 class="sidebarTabHeader active"><a href="#">Help</a></h2>
 		<div id="help" class="sidebarTabContent">
 			<div id="chatBubble"></div>
+			<div id="stuck">
+				<a href="#">Stuck? Get a hint!</a>
+			</div>
 		</div>
 		
 		<h2 class="sidebarTabHeader"><a href="#">Settings</a></h2>
 		<div id="settings" class="sidebarTabContent">
-			sequence1:<br><input type="text" name="" id="sequence1" value="GAT"/><br>
-			sequence2:<br><input type="text" name="" id="sequence2" value="GCA"/><br>
+			sequence1:<br><input type="text" name="" id="sequence1" class="sequence" value="GAT"/><br>
+			sequence2:<br><input type="text" name="" id="sequence2" class="sequence" value="GCA"/><br>
 			matchScore:<br><input type="text" name="" id="matchScore" value="1"/><br>
 			mismatchScore:<br><input type="text" name="" id="mismatchScore" value="-1"/><br>
 			gapPenalty:<br><input type="text" name="" id="gapPenalty" value="-1"/><br>
@@ -35,16 +38,14 @@
 			showTestingInfo: <input type="checkbox" name="" id="showTestingInfo"/><br>
 			guidedMode: <input type="checkbox" name="" id="guidedMode" checked/><br>
 			<button id="process">Process</button>
-			<button id="iAmStuck">I am stuck</button>
 			<br><br><br>
 		</div>
 	</div>
 
 	<div id="wrapper">
-		Input Matrix:
+		<h2>Input Matrix</h2>
 		<div id="inputTableContainer" class=""></div>
-		<br><br>
-		Input Alignment:
+		<h2>Input Alignment</h2>
 		<div id="inputAlignmentContainer" class="">
 			s1:<input type="text" id="alignmentInput1" class="alignmentInput"><br>
 			s2:<input type="text" id="alignmentInput2" class="alignmentInput"><br>
@@ -65,11 +66,11 @@
 	</div>
 
 	<div class="clear"></div>
-    <div id="tracebackSelectOptions" tabindex="-1">
-    	<input type="checkbox" class="tracebackCheckbox">
-    	<input type="checkbox" class="tracebackCheckbox">
-    	<input type="checkbox" class="tracebackCheckbox">
-    	<input type="checkbox" class="tracebackCheckbox">
+    <div id="tracebackSelectOptions">
+    	<p><input type="checkbox" class="tracebackCheckbox"> Zero</p>
+    	<p><input type="checkbox" class="tracebackCheckbox"> Left</p>
+		<p><input type="checkbox" class="tracebackCheckbox"> Top</p>
+		<p><input type="checkbox" class="tracebackCheckbox"> Diagonal</p>
     </div>
     <div id="tracebackSelectOptionsOverlay"></div>
 	

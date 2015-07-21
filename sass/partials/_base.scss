@@ -7,26 +7,93 @@ $gray         : lighten($gray-base, 33.5%);
 $gray-light   : lighten($gray-base, 46.7%);
 $gray-lighter : lighten($gray-base, 93.5%);
 
+// from foundation
+$white       : #FFFFFF;
+$ghost       : #FAFAFA;
+$snow        : #F9F9F9;
+$vapor       : #F6F6F6;
+$white-smoke : #F5F5F5;
+$silver      : #EFEFEF;
+$smoke       : #EEEEEE;
+$gainsboro   : #DDDDDD;
+$iron        : #CCCCCC;
+$base        : #AAAAAA;
+$aluminum    : #999999;
+$jumbo       : #888888;
+$monsoon     : #777777;
+$steel       : #666666;
+$charcoal    : #555555;
+$tuatara     : #444444;
+$oil         : #333333;
+$jet         : #222222;
+$black       : #000000;
+
+
+
+
+
 
 
 // Setup color theme
-$color-theme-1 : #66CCFF;
-$color-theme-2 : #9EDBFA;
-$color-theme-3 : #4c99bf;
-$color-theme-4 : red;
+$color-theme-1 : #66FFCC;
+$color-theme-2 : #73E1FF;
+$color-theme-3 : #66FFCC;
+$color-theme-4 : #73E1FF;
 
 // regexer for color scheme idea
 // blue #66CCFF
 // blue light #9EDBFA
 // blue dark #4c99bf
 
+
+
+
+// Font Families
+$font-family-monospace: "Lucida Console", Monaco, monospace;
+$font-family-sans-serif: "Open Sans","Hevetica Neue","Helvetica",sans-serif;
+
+
+
+// Status colors
+$correct: green;
+$wrong: red;
+$attention: yellow;
+$disabled: $steel;
+
+
+
 // Default color for any text
-$color-text : $gray-dark;
+$color-text : $jet;
+
+
+
+// Transitions lengths
+$transition-hover: 0.2s;
+
+
+
+
+
+
+
+
+
+
 
 body{
     color: $color-text;
+    font-family: $font-family-sans-serif;
 }
 
 .clear{
     clear:both;
+}
+
+a{ 
+    transition: color, $transition-hover;
+    color: $color-theme-1;
+
+    &:hover{
+        color: scale-color($color-theme-1, $lightness: -35%);
+    }
 }
