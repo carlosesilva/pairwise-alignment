@@ -12,36 +12,12 @@ body{
     text-align: center;
 }
 
-h1{
-    font-size: 3em;
-    margin: 30px 0;
-    text-align: center;
-}
-h2{
-    font-size: 2em;
-    margin: 30px 0;
-    text-align: center;
-}
 
 input{
     text-transform: uppercase;
 }
 
 
-.left{
-    width: 49%;
-    float: left;
-}
-.right{
-    width: 49%;
-    float: right;
-}
-
-
-#testing{
-    display: none;
-    border-left: 1px solid $color-theme-2;
-}
 
 .alignmentContainer{
     
@@ -61,7 +37,7 @@ input{
     }
     .alignment{
         text-align: left;
-        font-family: "Lucida Console", Monaco, monospace;
+        font-family: $font-family-monospace;
         font-size: 20px;
         letter-spacing: 5px;
     }
@@ -70,7 +46,7 @@ input{
 
 
 .alignmentInput{
-    font-family: "Lucida Console", Monaco, monospace;
+    font-family: $font-family-monospace;
     font-size: 20px;
     letter-spacing: 5px;
 
@@ -82,14 +58,174 @@ input{
     }
 }
 
-#tracebackSelectOptions{
+$topBarHeight: 50px;
+$sidebarWidth: 300px;
+$sidebarTabHeaderHeight:40px;
+
+#topBar{
+    background-color: $jet;
+    overflow: auto;
+    width:100vw;
+    height: $topBarHeight;
+    position: fixed;
+    top:0;
+    left:0;
+    z-index: 10;
+    color: $color-theme-4;
+    text-align: left;
+    
+    h1{
+        font-size: 1.5rem;
+        line-height: $topBarHeight;
+        padding: 0 20px;
+    }
+}
+
+.sidebar{
+    float:left;
+    width:$sidebarWidth;
+    height: calc(100vh - #{$topBarHeight});
+    background-color: $jet;
+    position: fixed;
+    top: $topBarHeight;
+    left:0;
+    z-index: 10;
+
+    color: $gray-lighter;
+
+    .sidebarTabHeader{
+        background-color: $oil;
+        text-align: left;
+        font-size: 1.5rem;
+        line-height: $sidebarTabHeaderHeight;
+        height: $sidebarTabHeaderHeight;
+        padding-left: 10px;
+        border-bottom: 1px solid $steel;
+        cursor: pointer;
+        a{
+            color: $smoke;
+            text-decoration: none;
+        }
+        &:hover{
+            background-color: scale-color( $oil, $lightness: -35%);
+            transition: background-color, $transition-hover;
+            a{ 
+                color: scale-color( $smoke, $lightness: -35%);
+            }
+        }
+        &.active{ 
+            background-color: mix($color-theme-3, $oil, 10%);
+            
+            a{
+                color: $color-theme-3;
+            }
+
+            &:hover{
+                background-color: scale-color(mix($color-theme-3, $oil, 10%), $lightness: -35%);
+                a{ 
+                    color: scale-color( $color-theme-3, $lightness: -35%);
+                }
+            }
+        }
+
+    }
+    .sidebarTabContent{
+        display: none;
+        background-color: $tuatara;
+        padding: 20px 10px;
+        // min-height: calc(100vh - #{$topBarHeight} - #{$sidebarTabHeaderHeight} - #{$sidebarTabHeaderHeight} - 40px);
+    }
+    #help{
+        display: block;
+    }
+}
+
+#wrapper{
+    float:left;
+    width: calc(100vw - #{$sidebarWidth});
+    margin: $topBarHeight 0  0 $sidebarWidth;
+
+    h2{
+        height: $sidebarTabHeaderHeight;
+        line-height: $sidebarTabHeaderHeight;
+        font-size: 1.5rem;
+        background-color: $color-theme-4;
+        border-bottom: 1px solid $iron;
+    }
+
+    h2 + div{
+        padding: 20px;
+    }
+}
+
+#inputTableContainer{
+    // margin: 20px 0 0 20px;
+}
+
+
+
+
+
+#testing{
+    @extend #wrapper;
+
     display: none;
+    position: absolute;
+    background-color: orange;
+}
+
+.sequence{
+    font-family: $font-family-monospace;
+    letter-spacing: 5px;
+}
+
+#settings{
+    input{
+        font-family: $font-family-monospace;
+        font-size: 1rem;
+    }
+}
+
+#stuck{
+    margin-top: 30px;
+    a{
+        text-decoration: none;
+    }
+}
+
+#intro{
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 99;
+    z-index: 100;
     
-    width: 100px;
-    height: 100px;
-    background-color: orange;
+    width: 100vw;
+    height: 100vh;
+    
+    background-color: rgba(#000, .75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .message{
+        width:600px;
+        padding: 100px;
+        background-color: #fff;
+        text-align: left;
+
+        h3{
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        h4{
+            font-size: 1.2rem;
+            margin: 1.5rem 0 0.5rem;
+        }
+        p{
+            margin: 0.5rem 0;
+        }
+        ul{
+            margin-left: 20px;
+            list-style-type: circle;
+        }
+    }
 }

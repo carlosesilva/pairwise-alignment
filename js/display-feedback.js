@@ -8,7 +8,7 @@ function displayFeedback (inputTable,feedbackMatrix) {
                 else
                     cell.addClass('wrong');
             }
-            var tracebackSelect = $(this).find('.tracebackSelect2').removeClass('correct wrong');
+            var tracebackSelect = $(this).find('.tracebackSelect').removeClass('correct wrong');
             if (tracebackSelect.html() != 'T'){
                 if (feedbackMatrix[i][j].traceback)
                     tracebackSelect.addClass('correct');

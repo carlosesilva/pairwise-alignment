@@ -9,7 +9,7 @@ var onError = function (err) {
     // beep on error, except when gulp-sass is being stupid and breaks because of imports
     if (err.message.indexOf('file to import not found or unreadable') < 0)
         gutil.beep();
-    // console.log(err);
+    console.log(err.toString());
     this.emit('end');
 };
 
@@ -32,7 +32,7 @@ gulp.task('serve', ['styles'], function() {
 gulp.task('styles', function() {
     return gulp.src("./sass/**/*.scss")
     .pipe(plumber(onError))
-    .pipe(sass({ includePaths : ['./sass/partials/'] }).on('error', sass.logError))
+    .pipe(sass({ includePaths : ['./sass/partials/'] }))
     .pipe(autoprefixer())
     .pipe(gulp.dest("./css"))
     .pipe(browserSync.stream());

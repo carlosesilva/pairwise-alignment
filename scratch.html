@@ -6,30 +6,63 @@
 	<link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-	<div id="wrapper" class="left">
+	<div id="intro">
+		<div class="message">
+			<h3>Welcome to Bla bla bla</h3>
+			<h4>About the tool</h4>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque facilis natus exercitationem illum, omnis perspiciatis? Voluptatibus saepe recusandae ab esse earum. Molestiae eius maxime, porro unde sed, consectetur excepturi possimus.</p>
+			<h4>How to use it</h4>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque facilis natus exercitationem illum, omnis perspiciatis? Voluptatibus saepe recusandae ab esse earum. Molestiae eius maxime, porro unde sed, consectetur excepturi possimus.</p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque facilis natus exercitationem illum, omnis perspiciatis? Voluptatibus saepe recusandae ab esse earum. Molestiae eius maxime, porro unde sed, consectetur excepturi possimus.</p>
+			<h4>Resources</h4>
+			<ul>
+				<li><a href="#">Lorem ipsum dolor sit amet.</a></li>
+				<li><a href="#">Excepturi at asperiores mollitia temporibus?</a></li>
+				<li><a href="#">Autem fugit dolore minima expedita.</a></li>
+				<li><a href="#">Voluptatibus doloribus voluptas reiciendis reprehenderit?</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div id="topBar">
 		<h1>Pairwise Alignment</h1>
-		<div id="options">
-			sequence1: <input type="text" name="" id="sequence1" value="GATTACA"/>
-			sequence2: <input type="text" name="" id="sequence2" value="GCATGCU"/><br><br>
-			matchScore: <input type="text" name="" id="matchScore" value="1"/>
-			mismatchScore: <input type="text" name="" id="mismatchScore" value="-1"/>
-			gapPenalty: <input type="text" name="" id="gapPenalty" value="-1"/><br><br>
-			mode: 
+	</div>
+	
+	<div class="sidebar">
+
+		<h2 class="sidebarTabHeader active"><a href="#">Help</a></h2>
+		<div id="help" class="sidebarTabContent">
+			<div id="chatBubble"></div>
+			<div id="stuck">
+				<a href="#">Stuck? Get a hint!</a>
+			</div>
+		</div>
+		
+		<h2 class="sidebarTabHeader"><a href="#">Settings</a></h2>
+		<div id="settings" class="sidebarTabContent">
+			sequence1:<br><input type="text" name="" id="sequence1" class="sequence" value="GAT"/><br>
+			sequence2:<br><input type="text" name="" id="sequence2" class="sequence" value="GCA"/><br>
+			matchScore:<br><input type="text" name="" id="matchScore" value="1"/><br>
+			mismatchScore:<br><input type="text" name="" id="mismatchScore" value="-1"/><br>
+			gapPenalty:<br><input type="text" name="" id="gapPenalty" value="-1"/><br>
+			mode:
 			<select name="" id="mode">
-				<option value="global">global</option>
+				<option value="global" selected>global</option>
 				<option value="semi" >semi</option>
-				<option value="local" selected>local</option>
-			</select>
-			instantFeedback: <input type="checkbox" name="" id="instantFeedback" checked/>
-			showTestingInfo: <input type="checkbox" name="" id="showTestingInfo" checked/>
+				<option value="local" >local</option>
+			</select><br>
+			instantFeedback: <input type="checkbox" name="" id="instantFeedback" checked/><br> 
+			showTestingInfo: <input type="checkbox" name="" id="showTestingInfo"/><br>
+			guidedMode: <input type="checkbox" name="" id="guidedMode" checked/><br>
 			<button id="process">Process</button>
 			<br><br><br>
 		</div>
-		
-		Input Matrix:
+	</div>
+
+	<div id="wrapper">
+		<h2>Input Matrix</h2>
 		<div id="inputTableContainer" class=""></div>
-		<br><br>
-		Input Alignment:
+		<h2>Input Alignment</h2>
 		<div id="inputAlignmentContainer" class="">
 			s1:<input type="text" id="alignmentInput1" class="alignmentInput"><br>
 			s2:<input type="text" id="alignmentInput2" class="alignmentInput"><br>
@@ -49,13 +82,17 @@
 		<div id="correctAlignment" class="alignmentContainer"></div>
 	</div>
 
-    <div id="tracebackSelectOptions" tabindex="-1">
-    	<input type="checkbox" class="tracebackCheckbox">
-    	<input type="checkbox" class="tracebackCheckbox">
-    	<input type="checkbox" class="tracebackCheckbox">
-    	<input type="checkbox" class="tracebackCheckbox">
+	<div class="clear"></div>
+    <div id="tracebackSelectOptions">
+    	<p><input type="checkbox" class="tracebackCheckbox"> Zero</p>
+    	<p><input type="checkbox" class="tracebackCheckbox"> Left</p>
+		<p><input type="checkbox" class="tracebackCheckbox"> Top</p>
+		<p><input type="checkbox" class="tracebackCheckbox"> Diagonal</p>
     </div>
-	
+    <div id="tracebackSelectOptionsOverlay"></div>
+
+
+
 <script src="js/jquery-1.11.1.min.js"></script>
 <script src="js/create-array.js"></script>
 <script src="js/compute-matrix.js"></script>
