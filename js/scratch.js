@@ -37,6 +37,13 @@ $(document).ready(function(){
     =            UI/UX            =
     =============================*/
 
+    $('#intro').click(function(event) {
+        $(this).hide();
+    }).children('div').click(function(event) {
+        event.stopPropagation();
+    });
+
+
     // sidebar
     $('.sidebarTabHeader').click(function(event) {
         if(!$(this).hasClass('active')){
@@ -48,7 +55,7 @@ $(document).ready(function(){
 
 
     // limit input to dynamicProgrammingMatrixCell to positive and negative integers only
-    $('#inputTableContainer .dynamicProgrammingMatrixCell').keyup(function(event) {
+    $('#inputTableContainer').on('keyup', ' .dynamicProgrammingMatrixCell', function(event) {
         $(this).val(filterInteger($(this).val()));
     });
 

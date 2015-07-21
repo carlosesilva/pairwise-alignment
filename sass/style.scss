@@ -192,3 +192,40 @@ $sidebarTabHeaderHeight:40px;
         text-decoration: none;
     }
 }
+
+#intro{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    
+    width: 100vw;
+    height: 100vh;
+    
+    background-color: rgba(#000, .75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .message{
+        width:600px;
+        padding: 100px;
+        background-color: #fff;
+        text-align: left;
+
+        h3{
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        h4{
+            font-size: 1.2rem;
+            margin: 1.5rem 0 0.5rem;
+        }
+        p{
+            margin: 0.5rem 0;
+        }
+        ul{
+            margin-left: 20px;
+            list-style-type: circle;
+        }
+    }
+}
