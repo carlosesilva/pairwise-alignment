@@ -44,70 +44,62 @@ a {
   a:hover {
     color: #00e89b; }
 
-.dynamicProgrammingMatrixWrapper td {
-  position: relative; }
-  .dynamicProgrammingMatrixWrapper td.irrelevant {
-    opacity: 0.35; }
-  .dynamicProgrammingMatrixWrapper td.guided input {
-    box-shadow: inset 0 0 10px #66FFCC; }
-
-.dynamicProgrammingMatrixWrapper input[type=text], .dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrixCell {
-  width: 50px;
-  height: 50px;
-  text-align: center;
-  background-color: #eeeeee;
-  border: 1px solid #66FFCC;
-  color: #555555; }
-
-.dynamicProgrammingMatrixWrapper > tbody > tr:nth-child(1) td input[type=text], .dynamicProgrammingMatrixWrapper > tbody > tr > td:nth-child(1) input[type=text] {
-  background-color: #333333;
-  color: #66FFCC;
-  font-weight: bold; }
-
-.dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrix {
-  position: absolute;
-  top: 0;
-  left: 0; }
-
-.dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrixCell:disabled {
-  background-color: #666666;
-  opacity: .5;
-  color: #000; }
-
-.dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrixCell.correct {
-  background-color: green;
-  color: #404040; }
-
-.dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrixCell.correct:disabled {
-  background-color: #337333;
-  color: #000; }
-
-.dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrixCell.wrong {
-  background-color: red; }
-
-.dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrixCell.wrong:disabled {
-  background-color: #b33333;
-  color: #000; }
-
-.dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrixCell.tracebackActive {
-  background-color: green; }
-
-.dynamicProgrammingMatrixWrapper .tracebackSelect {
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 14.28571px;
-  height: 14.28571px;
-  background-color: #aaa;
-  cursor: pointer;
-  outline: none;
-  font-size: 0.7rem;
-  line-height: 14.28571px;
-  border: 1px solid rgba(0, 0, 0, 0.5); }
-  .dynamicProgrammingMatrixWrapper .tracebackSelect.correct {
-    background-color: #006700; }
-  .dynamicProgrammingMatrixWrapper .tracebackSelect.wrong {
-    background-color: #db0000; }
+.dynamicProgrammingMatrixWrapper {
+  margin: 0 auto; }
+  .dynamicProgrammingMatrixWrapper td {
+    position: relative; }
+    .dynamicProgrammingMatrixWrapper td.irrelevant {
+      opacity: 0.35; }
+    .dynamicProgrammingMatrixWrapper td.guided input {
+      box-shadow: inset 0 0 10px #66FFCC; }
+  .dynamicProgrammingMatrixWrapper input[type=text], .dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrixCell {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    background-color: #eeeeee;
+    border: 1px solid #66FFCC;
+    color: #555555; }
+  .dynamicProgrammingMatrixWrapper > tbody > tr:nth-child(1) td input[type=text], .dynamicProgrammingMatrixWrapper > tbody > tr > td:nth-child(1) input[type=text] {
+    background-color: #333333;
+    color: #66FFCC;
+    font-weight: bold; }
+  .dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrix {
+    position: absolute;
+    top: 0;
+    left: 0; }
+  .dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrixCell:disabled {
+    background-color: #666666;
+    opacity: .5;
+    color: #000; }
+  .dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrixCell.correct {
+    background-color: green;
+    color: #404040; }
+  .dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrixCell.correct:disabled {
+    background-color: #337333;
+    color: #000; }
+  .dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrixCell.wrong {
+    background-color: red; }
+  .dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrixCell.wrong:disabled {
+    background-color: #b33333;
+    color: #000; }
+  .dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrixCell.tracebackActive {
+    background-color: green; }
+  .dynamicProgrammingMatrixWrapper .tracebackSelect {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 14.28571px;
+    height: 14.28571px;
+    background-color: #aaa;
+    cursor: pointer;
+    outline: none;
+    font-size: 0.7rem;
+    line-height: 14.28571px;
+    border: 1px solid rgba(0, 0, 0, 0.5); }
+    .dynamicProgrammingMatrixWrapper .tracebackSelect.correct {
+      background-color: #006700; }
+    .dynamicProgrammingMatrixWrapper .tracebackSelect.wrong {
+      background-color: #db0000; }
 
 #tracebackSelectOptions {
   display: none;
@@ -184,12 +176,14 @@ input {
   float: left;
   width: 300px;
   height: calc(100vh - 50px);
+  overflow-y: auto;
   background-color: #222222;
   position: fixed;
   top: 50px;
   left: 0;
   z-index: 10;
-  color: #eeeeee; }
+  color: #eeeeee;
+  text-align: left; }
   .sidebar .sidebarTabHeader {
     background-color: #333333;
     text-align: left;
@@ -247,7 +241,8 @@ input {
 
 #settings input {
   font-family: "Lucida Console", Monaco, monospace;
-  font-size: 1rem; }
+  font-size: 1rem;
+  margin: 5px 0 10px; }
 
 #stuck {
   margin-top: 30px; }

@@ -85,6 +85,7 @@ $sidebarTabHeaderHeight:40px;
     float:left;
     width:$sidebarWidth;
     height: calc(100vh - #{$topBarHeight});
+    overflow-y: auto;
     background-color: $jet;
     position: fixed;
     top: $topBarHeight;
@@ -92,6 +93,7 @@ $sidebarTabHeaderHeight:40px;
     z-index: 10;
 
     color: $gray-lighter;
+    text-align: left;
 
     .sidebarTabHeader{
         background-color: $oil;
@@ -183,6 +185,7 @@ $sidebarTabHeaderHeight:40px;
     input{
         font-family: $font-family-monospace;
         font-size: 1rem;
+        margin: 5px 0 10px;
     }
 }
 
@@ -229,3 +232,5 @@ $sidebarTabHeaderHeight:40px;
         }
     }
 }
+
+
