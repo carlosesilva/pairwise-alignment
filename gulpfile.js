@@ -2,8 +2,7 @@ var gulp         = require('gulp');
 var gutil        = require('gulp-util');
 var plumber      = require('gulp-plumber');
 var browserSync  = require('browser-sync').create();
-// var sass         = require('gulp-sass');
-var sass         = require('gulp-ruby-sass');
+var sass         = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
 
 var onError = function (err) {
@@ -30,21 +29,13 @@ gulp.task('serve', ['styles'], function() {
 });
 
 // Compile sass into CSS & auto-inject into browsers
-// gulp.task('styles', function() {
-//     return gulp.src("./sass/**/*.scss")
-//     .pipe(plumber(onError))
-//     .pipe(sass({ includePaths : ['./sass/partials/'] }))
-//     .pipe(autoprefixer())
-//     .pipe(gulp.dest("./css"))
-//     .pipe(browserSync.stream());
-// });
-
 gulp.task('styles', function() {
-    return sass('./sass/style.scss')
-        .pipe(plumber(onError))
-        .pipe(autoprefixer())
-        .pipe(gulp.dest('./css'))
-        .pipe(browserSync.stream());
+    return gulp.src("./sass/**/*.scss")
+    .pipe(plumber(onError))
+    .pipe(sass({ includePaths : ['./sass/partials/'] }))
+    .pipe(autoprefixer())
+    .pipe(gulp.dest("./css"))
+    .pipe(browserSync.stream());
 });
 
 
