@@ -29,14 +29,6 @@
 	</div>
 	
 	<div class="sidebar">
-
-		<h2 class="sidebarTabHeader active"><a href="#">Help</a></h2>
-		<div id="help" class="sidebarTabContent">
-			<div id="chatBubble"></div>
-			<div id="stuck">
-				<a href="#">Stuck? Get a hint!</a>
-			</div>
-		</div>
 		
 		<h2 class="sidebarTabHeader"><a href="#">Settings</a></h2>
 		<div id="settings" class="sidebarTabContent">
@@ -57,6 +49,14 @@
 			<button id="process">Process</button>
 			<br><br><br>
 		</div>
+
+		<h2 class="sidebarTabHeader active"><a href="#">Help</a></h2>
+		<div id="help" class="sidebarTabContent">
+			<div id="chatBubble"></div>
+			<div id="stuck">
+				<a href="#">Stuck? Get a hint!</a>
+			</div>
+		</div>
 	</div>
 
 	<div id="wrapper">
@@ -71,14 +71,12 @@
 	</div>
 
 	<div id="testing" class="right">
-    	<h1>Testing info here</h1>
-
+		<h2>Correct Matrix</h2>
+		<div id="correctMatrix" class="dynamicProgrammingMatrixWrapper"></div>
 		<button id="readMatrix">Read Matrix</button>
 		<button id="compareMatrices">Compare Matrices</button>
-		<br><br>
-		Correct Matrix:
-		<div id="correctMatrix" class="dynamicProgrammingMatrixWrapper"></div>
-		Correct Alignments:
+		<br>
+		<h2>Possible Alignments</h2>
 		<div id="correctAlignment" class="alignmentContainer"></div>
 	</div>
 
