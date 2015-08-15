@@ -123,9 +123,9 @@ $(document).ready(function(){
         currentTracebackInfo[$(this).parent().index()+1] = +(this.checked);
         // console.log(currentTracebackInfo);
         currentTracebackSelect.next().attr('traceback', JSON.stringify(currentTracebackInfo));
-        currentTracebackSelect.find('div').eq($(this).parent().index()).toggleClass('active');
+        currentTracebackSelect.find('.arrow').eq($(this).parent().index()).toggleClass('active');
         
-        if (currentTracebackSelect.find('div').removeClass('alone').filter('.active').length == 1)
+        if (currentTracebackSelect.find('.arrow').removeClass('alone').filter('.active').length == 1)
             currentTracebackSelect.find('.active').addClass('alone');
 
         // currentTracebackSelect.html(parseInt(currentTracebackInfo.join(''), 2));
