@@ -5,7 +5,7 @@ function compareMatrices (m1, m2) {
         for (var j = 0; j < m1[i].length; j++) {
             feedbackMatrix[i][j] =  {
                 score: m1[i][j].score === m2[i][j].score,
-                traceback: m1[i][j].traceback.join('') === m2[i][j].traceback.join('')
+                traceback: m1[i][j].traceback.join('').slice(1) === m2[i][j].traceback.join('').slice(1)
             };
         }
     }

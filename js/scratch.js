@@ -106,7 +106,7 @@ $(document).ready(function(){
                 top: $(this).offset().top + $(this).height(),
                 left: $(this).offset().left - $('#tracebackSelectOptions').outerWidth()
             }).find('.tracebackCheckbox').each(function(index, el) {
-                if (thisTraceback[index]){
+                if (thisTraceback[index+1]){
                     $(this).prop('checked', true);
                 } else {
                     $(this).prop('checked', false);
@@ -120,10 +120,15 @@ $(document).ready(function(){
         // console.log(event);
         var currentTracebackInfo = JSON.parse(currentTracebackSelect.next().attr('traceback'));
         // console.log($(this).index());
-        currentTracebackInfo[$(this).parent().index()] = +(this.checked);
+        currentTracebackInfo[$(this).parent().index()+1] = +(this.checked);
         // console.log(currentTracebackInfo);
         currentTracebackSelect.next().attr('traceback', JSON.stringify(currentTracebackInfo));
-        currentTracebackSelect.html(parseInt(currentTracebackInfo.join(''), 2));
+        currentTracebackSelect.find('div').eq($(this).parent().index()).toggleClass('active');
+        
+        if (currentTracebackSelect.find('div').removeClass('alone').filter('.active').length == 1)
+            currentTracebackSelect.find('.active').addClass('alone');
+
+        // currentTracebackSelect.html(parseInt(currentTracebackInfo.join(''), 2));
 
         if (instantFeedback){
             displayFeedback($('#inputTableContainer .dynamicProgrammingMatrix'), compareMatrices(correctMatrix, readMatrix($('#inputTableContainer .dynamicProgrammingMatrix'))));

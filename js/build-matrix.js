@@ -32,7 +32,7 @@ function buildDynamicProgrammingMatrix(seq1, seq2){
         result += '<tr>';
         for (var j = -1; j<seq2.length; j++){
             result += '<td>';
-            result += '<div class="tracebackSelect" tabindex="-1">T</div>';
+            result += '<div class="tracebackSelect" tabindex="-1"><div class="arrow arrow-left"></div><div class="arrow arrow-top"></div><div class="arrow arrow-diag"></div></div>';
             // result += '<div class="tracebackSelectOptions">';
             // result +=     '<input type="checkbox" name="zero" id="" />';
             // result +=     '<input type="checkbox" name="left" id="" />';
