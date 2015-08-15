@@ -70,7 +70,9 @@ $(document).ready(function(){
 
     $(document).on('click', '.stuckCellHover', function(event) {
         event.preventDefault();
-        animateCSS(stuckCell, "tada");
+        findStuckCell($('#inputTableContainer .dynamicProgrammingMatrix'));
+
+        animateCSS(stuckCell.focus(), "shake");
     });
 
     /*=============================
@@ -215,8 +217,6 @@ function filterInteger(val){
 function process () {
     console.log('---------------\nBegin process()\n---------------');
 
-    $('.solitaire-victory-clone, #placeholderText').remove();
-
 
     // set global variables
     // 
@@ -229,6 +229,12 @@ function process () {
     instantFeedback = $("#instantFeedback")[0].checked;
     guidedMode = $("#guidedMode")[0].checked;
 
+
+    // reset stuff
+    $('.solitaire-victory-clone, #placeholderText').remove();
+
+    // reset hintLevel
+    hintLevel = 0;
 
     // reset current step
     currentStep = 0;
@@ -280,11 +286,11 @@ function process () {
 
         // Add relevant/irrelevant visual guide
         $('#inputTableContainer .dynamicProgrammingMatrixContainer td').on('focusin.relevant.guidedMode', function(event) {
-            $(this).closest('table').find('td').addClass('irrelevant');
+            $(this).closest('table').find('td').removeClass('relevant').addClass('irrelevant');
             var top = $(this).parent().prev().find('td').eq($(this).index());
             var diag = top.prev();
             var left = $(this).prev();
-            $(this).add(left).add(top).add(diag).removeClass('irrelevant');
+            $(this).add(left).add(top).add(diag).removeClass('irrelevant').addClass('relevant');
         }).addClass('namespace_guidedMode');
         // Reset relevant/irrelevant cells when dynamicProgrammingMatrixContainer loses focus
         $('#inputTableContainer .dynamicProgrammingMatrixContainer').on('focusout.relevant.guidedMode', function(event) {
@@ -560,30 +566,72 @@ function tracebackGuide (matrix) {
 
 function getAHint (matrix) {
     var hints = [
-        'Complete <a href="#" class="stuckCellHover">this cell</a>',
-        'Hint Level 2',
-        'Hint Level 3',
-        'Hint Level 4'
+        '<p>Hint Level 1</p>',
+        '<p>Hint Level 2</p>',
+        '<p>Hint Level 3</p>'
     ];
 
     talk(hints[hintLevel],true);
 
-
-    animateCSS(findStuckCell(matrix), "tada");
+    findStuckCell(matrix);
+    animateCSS(stuckCell.focus(), "shake");
 
     if (hintLevel < (hints.length -1) ){
         hintLevel++;
+    }else{
+        hintLevel = 0;
     }
 }
 
 
 function findStuckCell (matrix) {
-    matrix.find('td').each(function(index, el) {
-        if( !$(el).find('.dynamicProgrammingMatrixCell').hasClass('correct') ){
-            stuckCell = $(el);
+    var $cells = matrix.find('td');
+    var $row1 = matrix.find('tr').eq(0).find('td');
+    var $col1 = matrix.find('tr').find('td:eq(0)');
+    var $mainCells = $cells.not($row1).not($col1);
+
+    stuckCell = false;
+
+
+
+    $row1.each(function(index, el) {
+        if( !$(el).find('.dynamicProgrammingMatrixCell').hasClass('correct')){
+            stuckCell = $(el).find('.dynamicProgrammingMatrixCell');
+            return false;
+        }else if( !$(el).find('.tracebackSelect').hasClass('correct')){
+            stuckCell = $(el).find('.tracebackSelect');
             return false;
         }
     });
+
+    if (stuckCell === false){
+
+        $col1.each(function(index, el) {
+            if( !$(el).find('.dynamicProgrammingMatrixCell').hasClass('correct')){
+                stuckCell = $(el).find('.dynamicProgrammingMatrixCell');
+                return false;
+            }else if( !$(el).find('.tracebackSelect').hasClass('correct')){
+                stuckCell = $(el).find('.tracebackSelect');
+                return false;
+            }
+        });
+
+    }
+
+    if (stuckCell === false){
+
+        $mainCells.each(function(index, el) {
+            if( !$(el).find('.dynamicProgrammingMatrixCell').hasClass('correct')){
+                stuckCell = $(el).find('.dynamicProgrammingMatrixCell');
+                return false;
+            }else if( !$(el).find('.tracebackSelect').hasClass('correct')){
+                stuckCell = $(el).find('.tracebackSelect');
+                return false;
+            }
+        });
+
+    }
+
     return stuckCell;
 }
 
@@ -598,6 +646,11 @@ function checkCompletion (elements) {
 }
 
 function talk (content, clear) {
+    if (content == ""){
+        $('#chatBubble').hide();
+    }else{
+        $('#chatBubble').show('fade');
+    }
     if (clear === true){
         $('#chatBubble').html('');
     }

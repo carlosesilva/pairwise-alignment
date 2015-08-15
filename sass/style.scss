@@ -143,8 +143,51 @@ $sidebarTabHeaderHeight:40px;
 
     #help{
         text-align: center;
+        #stuck{
+            margin: 20px 0;
+        }
     }
+
 }
+
+
+
+#chatBubble {
+    display: none;
+    position: relative;
+    background: #88b7d5;
+    border: 4px solid #c2e1f5;
+    margin: 20px 10px 40px;
+    padding: 40px 0;
+    border-radius: 6px;
+}
+#chatBubble:after, #chatBubble:before {
+    top: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+#chatBubble:after {
+    border-color: rgba(136, 183, 213, 0);
+    border-top-color: #88b7d5;
+    border-width: 30px;
+    margin-left: -30px;
+}
+#chatBubble:before {
+    border-color: rgba(194, 225, 245, 0);
+    border-top-color: #c2e1f5;
+    border-width: 36px;
+    margin-left: -36px;
+}
+
+
+
+
 
 #wrapper{
     float:left;
@@ -193,12 +236,6 @@ $sidebarTabHeaderHeight:40px;
     }
 }
 
-#stuck{
-    margin-top: 30px;
-    a{
-        text-decoration: none;
-    }
-}
 
 #intro{
     position: absolute;
@@ -238,6 +275,11 @@ $sidebarTabHeaderHeight:40px;
 }
 
 
-.no-close .ui-dialog-titlebar-close {
-  display: none;
+.no-close{
+    .ui-dialog-title{
+        width: 100%;
+    }
+    .ui-dialog-titlebar-close {
+        display: none;
+    }
 }
