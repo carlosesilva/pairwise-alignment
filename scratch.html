@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Home</title>
+	<link href="plugins/jquery-ui-1.11.4/jquery-ui.css" rel="stylesheet">
 	<link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -30,10 +31,10 @@
 	
 	<div class="sidebar">
 		
-		<h2 class="sidebarTabHeader"><a href="#">Settings</a></h2>
+		<h2 class="sidebarTabHeader active"><a href="#">Settings</a></h2>
 		<div id="settings" class="sidebarTabContent">
 			Sequence 1:<br><input type="text" name="" id="sequence1" class="sequence" value="GAT"/><br>
-			Sequence 2:<br><input type="text" name="" id="sequence2" class="sequence" value="GCA"/><br>
+			Sequence 2:<br><input type="text" name="" id="sequence2" class="sequence" value="GCT"/><br>
 			Match score:<br><input type="text" name="" id="matchScore" value="1"/><br>
 			Mismatch score:<br><input type="text" name="" id="mismatchScore" value="-1"/><br>
 			Gap penalty:<br><input type="text" name="" id="gapPenalty" value="-1"/><br>
@@ -44,23 +45,25 @@
 				<option value="local" >local</option>
 			</select><br>
 			Instant Feedback: <input type="checkbox" name="" id="instantFeedback" checked/><br>
-			Guided Mode: <input type="checkbox" name="" id="guidedMode" checked/><br> 
-			showTestingInfo: <input type="checkbox" name="" id="showTestingInfo"/><br>
-			<button id="process">Process</button>
+			Guided Mode: <input type="checkbox" name="" id="guidedMode" checked/><br>
+			<button id="process">Start</button>
 			<br><br><br>
 		</div>
 
-		<h2 class="sidebarTabHeader active"><a href="#">Help</a></h2>
+		<h2 class="sidebarTabHeader"><a href="#">Help</a></h2>
 		<div id="help" class="sidebarTabContent">
 			<div id="chatBubble"></div>
+			<div id="hints"></div>
 			<div id="stuck">
-				<a href="#">Stuck? Get a hint!</a>
+				<a href="#">Stuck? Get a hint!</a><br/>
 			</div>
+			<a href="#" id="showTestingInfo"/><span>Show</span><span style="display:none;">Hide</span> Answers</a>
 		</div>
 	</div>
 
 	<div id="wrapper">
 		<h2>Input Matrix</h2>
+		<p id="placeholderText"><br/>Please select settings on the left panel and press start<br/><br/></p>
 		<div id="inputTableContainer" class=""></div>
 		<h2>Input Alignment</h2>
 		<div id="inputAlignmentContainer" class="">
@@ -73,8 +76,8 @@
 	<div id="testing" class="right">
 		<h2>Correct Matrix</h2>
 		<div id="correctMatrix" class="dynamicProgrammingMatrixWrapper"></div>
-		<button id="readMatrix">Read Matrix</button>
-		<button id="compareMatrices">Compare Matrices</button>
+		<!-- <button id="readMatrix">Read Matrix</button> -->
+		<!-- <button id="compareMatrices">Compare Matrices</button> -->
 		<br>
 		<h2>Possible Alignments</h2>
 		<div id="correctAlignment" class="alignmentContainer"></div>
@@ -89,9 +92,13 @@
     </div>
     <div id="tracebackSelectOptionsOverlay"></div>
 
-
+	<div class="guidedMode">
+		<div class="step" title=""></div>
+	</div>
 
 <script src="js/jquery-1.11.1.min.js"></script>
+<script src="plugins/jquery-ui-1.11.4/jquery-ui.js"></script>
+<script src="js/vendor/solitaireVictory.js"></script>
 <script src="js/create-array.js"></script>
 <script src="js/compute-matrix.js"></script>
 <script src="js/build-matrix.js"></script>

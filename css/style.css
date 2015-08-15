@@ -49,7 +49,7 @@ a {
   .dynamicProgrammingMatrixWrapper td {
     position: relative; }
     .dynamicProgrammingMatrixWrapper td.irrelevant {
-      opacity: 0.35; }
+      opacity: 0.65; }
     .dynamicProgrammingMatrixWrapper td.guided input {
       box-shadow: inset 0 0 10px #66FFCC; }
   .dynamicProgrammingMatrixWrapper input[type=text], .dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrixCell {
@@ -83,7 +83,7 @@ a {
     background-color: #b33333;
     color: #000; }
   .dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrixCell.tracebackActive {
-    background-color: green; }
+    background-color: blue; }
   .dynamicProgrammingMatrixWrapper .tracebackSelect {
     position: absolute;
     text-align: left;
@@ -269,7 +269,7 @@ input {
     display: none;
     background-color: #444444;
     padding: 20px 10px; }
-  .sidebar #help {
+  .sidebar #settings {
     display: block; }
 
 #wrapper, #testing {

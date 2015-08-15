@@ -8,7 +8,7 @@ $matrix-cell-border : 1px solid $color-theme-3 !default;
         position: relative;
 
         &.irrelevant{
-            opacity:0.35;
+            opacity:0.65;
         }
 
         &.guided input{
@@ -65,7 +65,7 @@ $matrix-cell-border : 1px solid $color-theme-3 !default;
 
     // used on correct matrix
     .dynamicProgrammingMatrixCell.tracebackActive{
-        background-color: $correct;
+        background-color: blue;
     }
 
 
