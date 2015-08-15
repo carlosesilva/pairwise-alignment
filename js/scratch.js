@@ -7,6 +7,9 @@ gapPenalty,
 mode,
 instantFeedback,
 guidedMode,
+confirmGuidedMode = false,
+hintLevel = 0,
+stuckCell,
 correctMatrix,
 correctTraceback,
 currentTracebackSelect,
@@ -24,7 +27,7 @@ $(document).ready(function(){
 
 
 
-    // process();
+    process();
     
     // $('#sequence1, #sequence2, #matchScore, #mismatchScore, #gapPenalty, #mode, #instantFeedback, #guidedMode').change(function(event) {
     //     process();
@@ -36,15 +39,45 @@ $(document).ready(function(){
     });
 
     $('#stuck a').click(function(event) {
-        step1($('#inputTableContainer .dynamicProgrammingMatrix'));
+        if (currentStep === 0 && confirmGuidedMode == false){
+
+            var dialogOptions = JSON.parse(JSON.stringify(guidedModeDialogOptions));
+
+            dialogOptions.buttons = {
+                "Yes": function() {
+                    $( this ).dialog( "close" );
+
+                    step1($('#inputTableContainer .dynamicProgrammingMatrix'));
+                },
+                "No": function() {
+                    $( this ).dialog( "close" );   
+                },
+                "No - Dont ask again": function() {
+                    confirmGuidedMode = true;
+                    $( this ).dialog( "close" );
+                }
+            };
+
+            $( "<div>" ).html('Would you like to enter guided mode?').dialog(dialogOptions);
+        }else{
+            console.log('test');
+            getAHint($('#inputTableContainer .dynamicProgrammingMatrix'));
+        }
+
     });
 
+
+
+    $(document).on('click', '.stuckCellHover', function(event) {
+        event.preventDefault();
+        animateCSS(stuckCell, "tada");
+    });
 
     /*=============================
     =            UI/UX            =
     =============================*/
 
-    $('#intro').click(function(event) {
+    $('#intro').hide().click(function(event) {
         $(this).hide();
     }).children('div').click(function(event) {
         event.stopPropagation();
@@ -524,6 +557,36 @@ function tracebackGuide (matrix) {
     tracebackSteps.shift()();
 
 }
+
+function getAHint (matrix) {
+    var hints = [
+        'Complete <a href="#" class="stuckCellHover">this cell</a>',
+        'Hint Level 2',
+        'Hint Level 3',
+        'Hint Level 4'
+    ];
+
+    talk(hints[hintLevel],true);
+
+
+    animateCSS(findStuckCell(matrix), "tada");
+
+    if (hintLevel < (hints.length -1) ){
+        hintLevel++;
+    }
+}
+
+
+function findStuckCell (matrix) {
+    matrix.find('td').each(function(index, el) {
+        if( !$(el).find('.dynamicProgrammingMatrixCell').hasClass('correct') ){
+            stuckCell = $(el);
+            return false;
+        }
+    });
+    return stuckCell;
+}
+
 function checkCompletion (elements) {
     var complete = true;
     elements.each(function(index, el) {
@@ -540,4 +603,11 @@ function talk (content, clear) {
     }
     $('#chatBubble').append(content);
 }
+
+function animateCSS(el, animation) {
+    animation = typeof animation !== 'undefined' ? animation : 'flash';
+    el.removeClass(animation + ' animated').addClass(animation + ' animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+        $(this).removeClass(animation + ' animated');
+    });
+};
 /*-----  End of Functions  ------*/
