@@ -340,3 +340,6 @@ input {
     #intro .message ul {
       margin-left: 20px;
       list-style-type: circle; }
+
+.no-close .ui-dialog-titlebar-close {
+  display: none; }

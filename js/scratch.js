@@ -11,7 +11,14 @@ correctMatrix,
 correctTraceback,
 currentTracebackSelect,
 currentStep,
-recursionCounter;
+recursionCounter,
+guidedModeDialogOptions = {
+    dialogClass: "no-close",
+    resizable: false,
+    modal: true,
+    closeOnEscape: false,
+    title: "Guided Mode"
+};
 
 $(document).ready(function(){
 
@@ -317,31 +324,31 @@ function step1 (matrix) {
         // talk('<p>Step 1</p>', true);
         // talk('<p>Fill in first row</p>');
         
-        $( "<div>" )
-                .html('Fill in first row')
-                .dialog({
-                    title: "Step 1",
-                    buttons: {
-                        "Ok": function() {
-                            $( this ).dialog( "close" );
+        var dialogOptions = JSON.parse(JSON.stringify(guidedModeDialogOptions));
 
-                            $cells.removeClass('guided');
-                            $row1.addClass('guided').eq(0).find('.dynamicProgrammingMatrixCell').focus();
-                            $cells.not($row1).find('input').add($('#inputAlignmentContainer').find('input')).prop('disabled', true);
+        dialogOptions.buttons = {
+            "Ok": function() {
+                $( this ).dialog( "close" );
+
+                $cells.removeClass('guided');
+                $row1.addClass('guided').eq(0).find('.dynamicProgrammingMatrixCell').focus();
+                $cells.not($row1).find('input').add($('#inputAlignmentContainer').find('input')).prop('disabled', true);
 
 
-                            $row1.add('.tracebackCheckbox').on('change.step1.guidedMode', function(event) {
-                                console.log('test step1');
-                                if (checkCompletion($row1.children())){
-                                    // stop step1 event
-                                    // $row1.off('.step1');
+                $row1.add('.tracebackCheckbox').on('change.step1.guidedMode', function(event) {
+                    console.log('test step1');
+                    if (checkCompletion($row1.children())){
+                        // stop step1 event
+                        $('.namespace_guidedMode').off('.step1');
 
-                                    step2(matrix);
-                                }
-                            }).addClass('namespace_guidedMode');
-                        }
+                        step2(matrix);
                     }
-                });
+                }).addClass('namespace_guidedMode');
+            }
+        };
+
+
+        $( "<div>" ).html('Step 1 </br> Fill in first row').dialog(dialogOptions);
     }
 }
 
@@ -360,37 +367,31 @@ function step2 (matrix) {
         // talk('<p>Entering step2</p>', true);
         // talk('<p>Complete first column</p>');
         
+        var dialogOptions = JSON.parse(JSON.stringify(guidedModeDialogOptions));
 
+        dialogOptions.buttons = {
+            "Ok": function() {
+                $( this ).dialog( "close" );
 
-        $( "<div>" )
-                .html('Now complete the first column')
-                .dialog({
-                    title: "Step 2",
-                    buttons: {
-                        "Ok": function() {
-                            $( this ).dialog( "close" );
+                $cells.find('input').prop('disabled', false);
+                $col1.eq(1).find('.dynamicProgrammingMatrixCell').focus();
+                $cells.removeClass('guided');
+                $col1.addClass('guided');
+                $cells.not($col1).find('input').prop('disabled', true);
 
-                            $cells.find('input').prop('disabled', false);
-                            $col1.eq(1).find('.dynamicProgrammingMatrixCell').focus();
-                            $cells.removeClass('guided');
-                            $col1.addClass('guided');
-                            $cells.not($col1).find('input').prop('disabled', true);
+                $col1.add('.tracebackCheckbox').on('change.step2.guidedMode', function(event) {
+                    console.log('test step2');
+                    if (checkCompletion($col1.children())){
+                        // stop step2 event
+                        $('.namespace_guidedMode').off('.step2');
 
-                            $col1.add('.tracebackCheckbox').on('change.step2.guidedMode', function(event) {
-                                console.log('test step2');
-                                if (checkCompletion($col1.children())){
-                                    // stop step1 event
-                                    // $row1.off('.step1');
-
-                                    step3(matrix);
-                                }
-                            }).addClass('namespace_guidedMode');
-                        }
+                        step3(matrix);
                     }
-                });
+                }).addClass('namespace_guidedMode');
+            }
+        };
 
-
-
+        $( "<div>" ).html('Now complete the first column').dialog(dialogOptions);
         
     }
 }
@@ -410,32 +411,31 @@ function step3 (matrix) {
         // talk('<p>Entering step3</p>', true);
         // talk('<p>Complete rest of matrix</p>');
         
-        $( "<div>" )
-                .html('Complete rest of matrix')
-                .dialog({
-                    title: "Step 2",
-                    buttons: {
-                        "Ok": function() {
-                            $( this ).dialog( "close" );
+        var dialogOptions = JSON.parse(JSON.stringify(guidedModeDialogOptions));
 
-                            $cells.find('input').prop('disabled', false);
-                            $mainCells.eq(0).find('.dynamicProgrammingMatrixCell').focus();
-                            $cells.removeClass('guided');
-                            $mainCells.addClass('guided');
-                            $cells.not($mainCells).find('input').prop('disabled', true);
+        dialogOptions.buttons = {
+            "Ok": function() {
+                $( this ).dialog( "close" );
 
-                            $mainCells.add('.tracebackCheckbox').on('change.step3.guidedMode', function(event) {
-                                console.log('test step3', checkCompletion($mainCells.children()));
-                                if (checkCompletion($mainCells.children())){
-                                    // stop step2 event
-                                    // $col1.off('.step2');
+                $cells.find('input').prop('disabled', false);
+                $mainCells.eq(0).find('.dynamicProgrammingMatrixCell').focus();
+                $cells.removeClass('guided');
+                $mainCells.addClass('guided');
+                $cells.not($mainCells).find('input').prop('disabled', true);
 
-                                    step4(matrix);
-                                }
-                            }).addClass('namespace_guidedMode');
-                        }
+                $mainCells.add('.tracebackCheckbox').on('change.step3.guidedMode', function(event) {
+                    console.log('test step3', checkCompletion($mainCells.children()));
+                    if (checkCompletion($mainCells.children())){
+                        // stop step3 event
+                        $('.namespace_guidedMode').off('.step3');
+
+                        step4(matrix);
                     }
-                });
+                }).addClass('namespace_guidedMode');
+            }
+        };
+
+        $( "<div>" ).html('Complete rest of matrix').dialog(dialogOptions);
         
     }
 }
@@ -456,12 +456,7 @@ function step4 (matrix) {
 function tracebackGuide (matrix) {
     var delay = 500;
 
-    var guidedModeTitle = "Guided Mode";
-
-    var skipContinue = {
-        "Skip": function() {
-          $( this ).dialog( "close" );
-        },
+    guidedModeDialogOptions.buttons = {
         "Continue": function() {
             $( this ).dialog( "close" );
             if(tracebackSteps.length){
@@ -470,17 +465,12 @@ function tracebackGuide (matrix) {
         }
     };
 
-    var guidedModeDialogOptions = {
-        title: guidedModeTitle,
-        resizable: false,
-        modal: true,
-        closeOnScape: false,
-        buttons: skipContinue
-    };
-
-
-
     var tracebackSteps = [
+        function() {
+            $( "<div>" )
+                .html('Now we will demonstrate how to perform a traceback')
+                .dialog(guidedModeDialogOptions);
+        },
         function() {
             $( "<div>" )
                 .html('First Step of tracebacking is to select the last cell')
@@ -503,21 +493,21 @@ function tracebackGuide (matrix) {
         },
         function() {
             $( "<div>" )
-                .html('Now do that until you hit the first cell')
+                .html('Now continue doing that until you hit the first cell')
                 .dialog(guidedModeDialogOptions);
         },
         function() {
-            (function forLoop (k) {          
+            (function forLoop (k) {
                 setTimeout(function () {
-                    matrix.find('tr').eq(correctTraceback[0].tracedCells[k].i).find('td').eq(correctTraceback[0].tracedCells[k].j).find('.dynamicProgrammingMatrixCell').addClass('tracebackActive');  
+                    matrix.find('tr').eq(correctTraceback[0].tracedCells[k].i).find('td').eq(correctTraceback[0].tracedCells[k].j).find('.dynamicProgrammingMatrixCell').addClass('tracebackActive');
 
                     //  increment k and call forLoop again if k < length          
-                    if (++k < correctTraceback[0].tracedCells.length){ 
-                        forLoop(k);      
+                    if (++k < correctTraceback[0].tracedCells.length){
+                        forLoop(k);
                     }else{
                         setTimeout(tracebackSteps.shift(),delay);
                     }
-                }, delay)
+                }, delay);
             })(window.tracebackCounter++);
         },
         function() {
@@ -530,16 +520,17 @@ function tracebackGuide (matrix) {
         }
     ];
 
+    // Start chain of events
     tracebackSteps.shift()();
 
 }
 function checkCompletion (elements) {
     var complete = true;
-    elements.filter('.dynamicProgrammingMatrixCell, .tracebackSelect').each(function(index, el) {
+    elements.each(function(index, el) {
         if(!$(el).hasClass('correct'))
             complete = false;
     });
-    if (complete) {$('#tracebackSelectOptionsOverlay').click()};
+    if (complete) {$('#tracebackSelectOptionsOverlay').click();}
     return complete;
 }
 
