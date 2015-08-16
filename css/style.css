@@ -44,12 +44,15 @@ a {
   a:hover {
     color: #00e89b; }
 
+strong {
+  font-weight: bold; }
+
 .dynamicProgrammingMatrixWrapper {
   margin: 0 auto; }
   .dynamicProgrammingMatrixWrapper td {
     position: relative; }
     .dynamicProgrammingMatrixWrapper td.irrelevant {
-      opacity: 0.65; }
+      opacity: 0.45; }
     .dynamicProgrammingMatrixWrapper td.guided input {
       box-shadow: inset 0 0 10px #66FFCC; }
   .dynamicProgrammingMatrixWrapper input[type=text], .dynamicProgrammingMatrixWrapper .dynamicProgrammingMatrixCell {
@@ -275,12 +278,20 @@ input {
     text-align: center; }
     .sidebar #help #stuck {
       margin: 20px 0; }
+    .sidebar #help table.hint {
+      text-align: left;
+      margin: 30px auto; }
+      .sidebar #help table.hint td:nth-child(1) {
+        padding-right: 5px; }
+      .sidebar #help table.hint td:nth-child(2) {
+        padding: 5px 0 5px 5px;
+        border-left: 1px solid #eeeeee; }
 
 #chatBubble {
   display: none;
   position: relative;
-  background: #88b7d5;
-  border: 4px solid #c2e1f5;
+  background: #666666;
+  border: 4px solid #73E1FF;
   margin: 20px 10px 40px;
   padding: 40px 0;
   border-radius: 6px; }
@@ -297,13 +308,13 @@ input {
 
 #chatBubble:after {
   border-color: rgba(136, 183, 213, 0);
-  border-top-color: #88b7d5;
+  border-top-color: #666666;
   border-width: 30px;
   margin-left: -30px; }
 
 #chatBubble:before {
   border-color: rgba(194, 225, 245, 0);
-  border-top-color: #c2e1f5;
+  border-top-color: #73E1FF;
   border-width: 36px;
   margin-left: -36px; }
 

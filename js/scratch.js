@@ -10,6 +10,9 @@ guidedMode,
 confirmGuidedMode = false,
 hintLevel = 0,
 stuckCell,
+relevantTop,
+relevantLeft,
+relevantDiag,
 correctMatrix,
 correctTraceback,
 currentTracebackSelect,
@@ -27,7 +30,7 @@ $(document).ready(function(){
 
 
 
-    process();
+    // process();
     
     // $('#sequence1, #sequence2, #matchScore, #mismatchScore, #gapPenalty, #mode, #instantFeedback, #guidedMode').change(function(event) {
     //     process();
@@ -50,20 +53,32 @@ $(document).ready(function(){
                     step1($('#inputTableContainer .dynamicProgrammingMatrix'));
                 },
                 "No": function() {
-                    $( this ).dialog( "close" );   
+                    $( this ).dialog( "close" );
+                    getAHint($('#inputTableContainer .dynamicProgrammingMatrix'));  
                 },
                 "No - Dont ask again": function() {
                     confirmGuidedMode = true;
                     $( this ).dialog( "close" );
+                    getAHint($('#inputTableContainer .dynamicProgrammingMatrix'));
                 }
             };
 
             $( "<div>" ).html('Would you like to enter guided mode?').dialog(dialogOptions);
         }else{
-            console.log('test');
             getAHint($('#inputTableContainer .dynamicProgrammingMatrix'));
         }
 
+    });
+
+
+    $(document).on('click', '.linkDiag', function(event) {
+        animateCSS(relevantDiag, "flash");
+    });
+    $(document).on('click', '.linkTop', function(event) {
+        animateCSS(relevantTop, "flash");
+    });
+    $(document).on('click', '.linkLeft', function(event) {
+        animateCSS(relevantLeft, "flash");
     });
 
 
@@ -79,7 +94,7 @@ $(document).ready(function(){
     =            UI/UX            =
     =============================*/
 
-    $('#intro').hide().click(function(event) {
+    $('#intro').click(function(event) {
         $(this).hide();
     }).children('div').click(function(event) {
         event.stopPropagation();
@@ -100,6 +115,7 @@ $(document).ready(function(){
         }
     });
 
+    // $('#help').prev().click();
 
     // limit input to dynamicProgrammingMatrixCell to positive and negative integers only
     $('#inputTableContainer').on('keyup', ' .dynamicProgrammingMatrixCell', function(event) {
@@ -233,6 +249,8 @@ function process () {
     // reset stuff
     $('.solitaire-victory-clone, #placeholderText').remove();
 
+    $('#inputAlignmentContainer').find('input').prop('disabled', false);
+
     // reset hintLevel
     hintLevel = 0;
 
@@ -256,6 +274,9 @@ function process () {
     // Build input matrix
     $('#inputTableContainer').html(buildMatrixHTML(sequence1, sequence2));
 
+
+    // Find cell that the user should complete next
+    findStuckCell($('#inputTableContainer .dynamicProgrammingMatrix'));
     
 
     /*========================================
@@ -275,6 +296,26 @@ function process () {
 
 
 
+
+    // Add relevant/irrelevant visual guide
+    $('#inputTableContainer .dynamicProgrammingMatrixContainer td').on('focusin.relevant.guidedMode', function(event) {
+        $(this).closest('table').find('td').removeClass('relevant').addClass('irrelevant');
+        relevantTop = $(this).parent().prev().find('td').eq($(this).index());
+        relevantDiag = relevantTop.prev();
+        relevantLeft = $(this).prev();
+        $(this).add(relevantLeft).add(relevantTop).add(relevantDiag).removeClass('irrelevant').addClass('relevant');
+
+        if(hintLevel >= 2){
+            updateHintRelevantValues();
+        }
+    }).addClass('namespace_guidedMode');
+    // Reset relevant/irrelevant cells when dynamicProgrammingMatrixContainer loses focus
+    // $('#inputTableContainer .dynamicProgrammingMatrixContainer').on('focusout.relevant.guidedMode', function(event) {
+    //     $(this).find('td').removeClass('irrelevant');
+    // }).addClass('namespace_guidedMode');
+
+
+
     /*===================================
     =            GUIDED MODE            =
     ===================================*/
@@ -283,23 +324,6 @@ function process () {
 
         step1($('#inputTableContainer .dynamicProgrammingMatrix'));
 
-
-        // Add relevant/irrelevant visual guide
-        $('#inputTableContainer .dynamicProgrammingMatrixContainer td').on('focusin.relevant.guidedMode', function(event) {
-            $(this).closest('table').find('td').removeClass('relevant').addClass('irrelevant');
-            var top = $(this).parent().prev().find('td').eq($(this).index());
-            var diag = top.prev();
-            var left = $(this).prev();
-            $(this).add(left).add(top).add(diag).removeClass('irrelevant').addClass('relevant');
-        }).addClass('namespace_guidedMode');
-        // Reset relevant/irrelevant cells when dynamicProgrammingMatrixContainer loses focus
-        $('#inputTableContainer .dynamicProgrammingMatrixContainer').on('focusout.relevant.guidedMode', function(event) {
-            $(this).find('td').removeClass('irrelevant');
-        }).addClass('namespace_guidedMode');
-
-    }else{
-        // release event handles added by guidedMode
-        $('.namespace_guidedMode').off('.guidedMode').removeClass('guidedMode');
     }
     /*-----  End of GUIDED MODE  ------*/
 
@@ -490,6 +514,9 @@ function step4 (matrix) {
         
         $cells.find('input').prop('disabled', false);
 
+
+        $('#inputAlignmentContainer').find('input').prop('disabled', false);
+
         tracebackGuide (matrix);
 }
 function tracebackGuide (matrix) {
@@ -565,16 +592,42 @@ function tracebackGuide (matrix) {
 }
 
 function getAHint (matrix) {
-    var hints = [
-        '<p>Hint Level 1</p>',
-        '<p>Hint Level 2</p>',
-        '<p>Hint Level 3</p>'
-    ];
-
-    talk(hints[hintLevel],true);
 
     findStuckCell(matrix);
     animateCSS(stuckCell.focus(), "shake");
+
+    var hints = [];
+    hints.push(
+        'Remember that:\
+        <table class="hint">\
+            <tr>\
+                <td></td>\
+                <td><a href="#" class="linkDiag" data-initial-value="S(i-1,j-1)">S(i-1,j-1)</a> + s(i,j)</td>\
+            </tr>\
+            <tr>\
+                <td><a href="#" class="stuckCellHover">S(i,j)</a> =</td>\
+                <td><a href="#" class="linkLeft" data-initial-value="S(i-1,j)">S(i-1,j)</a> + <span class="gapValue">g</span></td>\
+            </tr>\
+            <tr>\
+                <td></td>\
+                <td><a href="#" class="linkTop" data-initial-value="S(i,j-1)">S(i,j-1)</a> + <span class="gapValue">g</span></td>\
+            </tr>\
+        </table>'
+    );
+    
+    hints.push(function(){
+        $('.gapValue').html(gapPenalty);
+    });
+
+    hints.push(updateHintRelevantValues);
+
+    if (typeof hints[hintLevel] == "function"){
+        hints[hintLevel]();
+    }
+    else{
+        talk(hints[hintLevel],true);
+    }
+
 
     if (hintLevel < (hints.length -1) ){
         hintLevel++;
@@ -583,6 +636,24 @@ function getAHint (matrix) {
     }
 }
 
+
+function updateHintRelevantValues () {
+    if(relevantDiag.length && relevantDiag.find('.dynamicProgrammingMatrixCell').val() !== '')
+        $('.linkDiag').html(relevantDiag.find('.dynamicProgrammingMatrixCell').val());
+    else
+        $('.linkDiag').html("N/A");
+    
+    if(relevantLeft.length && relevantLeft.find('.dynamicProgrammingMatrixCell').val() !== '')
+        $('.linkLeft').html(relevantLeft.find('.dynamicProgrammingMatrixCell').val());
+    else
+        $('.linkLeft').html("N/A");
+
+
+    if(relevantTop.length && relevantTop.find('.dynamicProgrammingMatrixCell').val() !== '')
+        $('.linkTop').html(relevantTop.find('.dynamicProgrammingMatrixCell').val());
+    else
+        $('.linkTop').html("N/A");
+}
 
 function findStuckCell (matrix) {
     var $cells = matrix.find('td');
